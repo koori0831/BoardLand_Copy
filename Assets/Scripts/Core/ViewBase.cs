@@ -1,13 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-// 프레젠터와 모델에 대한 직접 참조 없이 EventBus를 통해 변화한 값을 모델에 전달한다.
-public abstract class ViewBase<T, V> : MonoBehaviour where T : IUIEvent<V>
+// UI 표시를 담당한다. 사용자 입력은 각 View의 이벤트로 Presenter에 전달한다.
+public abstract class ViewBase : MonoBehaviour
 {
     [SerializeField] private CanvasGroup canvasGroup;
-    public bool UIEnable { get => uiEnable; }
+    public bool UIEnable => uiEnable;
     private bool uiEnable;
-    // Bus로 이벤트를 쏜다.
-    public abstract void UpdateModel(V UIData);
 
     public virtual void HideUIRoot()
     {
@@ -18,6 +16,7 @@ public abstract class ViewBase<T, V> : MonoBehaviour where T : IUIEvent<V>
         canvasGroup.blocksRaycasts = false;
         uiEnable = false;
     }
+
     public virtual void ShowUIRoot()
     {
         if (canvasGroup == null)
