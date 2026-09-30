@@ -1,11 +1,6 @@
-using UnityEngine;
-
-public class TitlePopupView : MonoBehaviour
+public class TitlePopupView : ViewBase<TitlePopupEvent, TitlePopupData>
 {
-    public ObservableProperty<string> testString = new("test");
-
-    private void Start()
+    public override void UpdateModel(TitlePopupData UIData)
     {
-        Debug.Log(testString.Value);
     }
 }

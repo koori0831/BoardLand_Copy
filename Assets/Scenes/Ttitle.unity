@@ -578,8 +578,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8938ce7bff3be042adfe06f7eb70ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitlePopupView
-  testString:
-    value: test
+  canvasGroup: {fileID: 1814206541}
+--- !u!114 &1814206540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814206537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0dbb0728fe7a74bba64c74f725ee13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TitlePopupManager
+  view: {fileID: 1814206539}
+--- !u!225 &1814206541
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814206537}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2009124666
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +900,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3908436375988244276, guid: 795cdc3c607b5684b8906a8e5999af8a, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1814206541}
+    - targetCorrespondingSourceObject: {fileID: 3908436375988244276, guid: 795cdc3c607b5684b8906a8e5999af8a, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1814206539}
+    - targetCorrespondingSourceObject: {fileID: 3908436375988244276, guid: 795cdc3c607b5684b8906a8e5999af8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1814206540}
   m_SourcePrefab: {fileID: 100100000, guid: 795cdc3c607b5684b8906a8e5999af8a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
