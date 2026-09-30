@@ -22,7 +22,7 @@ public class ObservableProperty<T>
         this.value = value;
     }
 
-    public void SetValue(T newValue)
+    private void SetValue(T newValue)
     {
         if (EqualityComparer<T>.Default.Equals(value, newValue))
             return;
@@ -36,15 +36,12 @@ public class ObservableProperty<T>
         value = newValue;
     }
 
-    public void Subscribe(Action<T> callback, bool notifyImmediately = false)
+    public void Subscribe(Action<T> callback)
     {
         if (callback == null)
             return;
 
         Changed += callback;
-
-        if (notifyImmediately)
-            callback(value);
     }
 
     public void Unsubscribe(Action<T> callback)
