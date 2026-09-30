@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 // 프레젠터와 모델에 대한 직접 참조 없이 EventBus를 통해 변화한 값을 모델에 전달한다.
 public abstract class ViewBase<T, V> : MonoBehaviour where T : IUIEvent<V>
