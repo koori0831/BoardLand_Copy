@@ -1,5 +1,3 @@
-using System;
-
 public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData>
 {
     private TitlePopupView titleView;
@@ -7,14 +5,16 @@ public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData
 
     public override void Initialize(ViewBase view, ModelBase<TitlePopupEvent, TitlePopupData> model)
     {
-        if (!(view is TitlePopupView popupView))
-            throw new ArgumentException("TitlePopupView is required.", nameof(view));
-        if (!(model is TitlePopupModel popupModel))
-            throw new ArgumentException("TitlePopupModel is required.", nameof(model));
-
         base.Initialize(view, model);
-        titleView = popupView;
-        titleModel = popupModel;
+        titleView = this.view as TitlePopupView;
+        titleModel = this.model as TitlePopupModel;
+
+        if (titleView == null || titleModel == null)
+        {
+            LogManager.Log("View or Model is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogMessageType.Error);
+            return;
+        }
+
         titleView.OpenRequested += OnOpenRequested;
         titleView.CloseRequested += OnCloseRequested;
     }
