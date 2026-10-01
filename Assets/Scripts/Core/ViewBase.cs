@@ -9,6 +9,15 @@ namespace Core
         public bool UIEnable => uiEnable;
         private bool uiEnable;
 
+        protected IPresenter presenter;
+
+        public virtual void Initialize(IPresenter presenter)
+        {
+            this.presenter = presenter;
+            if (canvasGroup == null)
+                canvasGroup = GetComponent<CanvasGroup>();
+        }
+
         public virtual void HideUIRoot()
         {
             if (canvasGroup == null)

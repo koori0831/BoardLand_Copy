@@ -1,4 +1,6 @@
 using Core;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData>
 {
@@ -16,31 +18,22 @@ public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData
             LogManager.Log("View or Model is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogMessageType.Error);
             return;
         }
-
-        titleView.OpenRequested += OnOpenRequested;
-        titleView.CloseRequested += OnCloseRequested;
     }
 
-    public override void OnModelValueChanged(TitlePopupData value)
+    public void OnClickStartButton()
     {
-        if (value.IsOpen)
-            view.ShowUIRoot();
-        else
-            view.HideUIRoot();
+        SceneManager.LoadScene("Game");
     }
-
-    private void OnOpenRequested() => titleModel.Open();
-
-    private void OnCloseRequested() => titleModel.Close();
+    public void OnClickSettingsButton()
+    {
+    }
+    public void OnClickExitButton()
+    {
+        Application.Quit();
+    }
 
     public override void Dispose()
     {
-        if (titleView != null)
-        {
-            titleView.OpenRequested -= OnOpenRequested;
-            titleView.CloseRequested -= OnCloseRequested;
-        }
-
         titleView = null;
         titleModel = null;
         base.Dispose();

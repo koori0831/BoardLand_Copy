@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Core
 {
-
     [Flags]
     public enum ELogMessageType
     {

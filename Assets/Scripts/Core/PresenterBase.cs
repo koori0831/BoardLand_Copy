@@ -1,8 +1,13 @@
 namespace Core
 {
+    public interface IPresenter
+    {
+        void Dispose();
+    }
+
     // TEvent: 외부에서 모델의 값을 변경하기 위한 IEvent.
     // TModelData: 이 MVP에서 사용하는 모델 데이터 형식(ex. struct TitleUIData)
-    public abstract class PresenterBase<TEvent, TModelData> where TEvent : IUIEvent<TModelData>
+    public abstract class PresenterBase<TEvent, TModelData> : IPresenter where TEvent : IUIEvent<TModelData>
     {
         protected ViewBase view;
         protected ModelBase<TEvent, TModelData> model;
@@ -12,6 +17,7 @@ namespace Core
             Dispose();
             this.view = view;
             this.model = model;
+            view.Initialize(this);
             model.Property.Subscribe(OnModelValueChanged);
             OnModelValueChanged(model.Property.Value);
         }

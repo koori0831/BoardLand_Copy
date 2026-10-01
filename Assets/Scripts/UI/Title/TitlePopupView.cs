@@ -1,31 +1,29 @@
 using Core;
-using System;
-using UnityEngine.InputSystem;
 
 public class TitlePopupView : ViewBase
 {
-    public event Action OpenRequested;
-    public event Action CloseRequested;
-
-    public void RequestOpen() => OpenRequested?.Invoke();
-
-    public void RequestClose() => CloseRequested?.Invoke();
-
-    private void Update()
+    private TitlePopupPresenter titlePresenter;
+    public override void Initialize(IPresenter presenter)
     {
-        var keyboard = Keyboard.current;
-        if (keyboard == null)
+        base.Initialize(presenter);
+        titlePresenter = presenter as TitlePopupPresenter;
+        if (titlePresenter == null)
+        {
+            LogManager.Log("Presenter is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogMessageType.Error);
             return;
+        }
+    }
 
-        if (keyboard.spaceKey.wasPressedThisFrame)
-        {
-            LogManager.Log("Space key pressed. Requesting open.", ELogType.UI, ELogCategory.TitlePopup);
-            RequestOpen();
-        }
-        if (keyboard.enterKey.wasPressedThisFrame)
-        {
-            LogManager.Log("Enter key pressed. Requesting close.", ELogType.UI, ELogCategory.TitlePopup);
-            RequestClose();
-        }
+    public void OnClickStartButton()
+    {
+        titlePresenter.OnClickStartButton();
+    }
+    public void OnClickSettingsButton()
+    {
+        titlePresenter.OnClickSettingsButton();
+    }
+    public void OnClickExitButton()
+    {
+        titlePresenter.OnClickExitButton();
     }
 }
