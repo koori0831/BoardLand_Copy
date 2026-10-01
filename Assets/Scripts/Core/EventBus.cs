@@ -1,35 +1,38 @@
 using System;
 using System.Collections.Generic;
 
-public interface IEvent { }
-
-public static class EventBus<T> where T : IEvent
+namespace Core
 {
-    private static readonly List<Action<T>> OnEventRaised = new List<Action<T>>();
+    public interface IEvent { }
 
-    public static void Subscribe(Action<T> listener)
+    public static class EventBus<T> where T : IEvent
     {
-        if (!OnEventRaised.Contains(listener))
+        private static readonly List<Action<T>> OnEventRaised = new List<Action<T>>();
+
+        public static void Subscribe(Action<T> listener)
         {
-            OnEventRaised.Add(listener);
+            if (!OnEventRaised.Contains(listener))
+            {
+                OnEventRaised.Add(listener);
+            }
         }
-    }
 
-    public static void Unsubscribe(Action<T> listener)
-    {
-        if (OnEventRaised.Contains(listener))
+        public static void Unsubscribe(Action<T> listener)
         {
-            OnEventRaised.Remove(listener);
+            if (OnEventRaised.Contains(listener))
+            {
+                OnEventRaised.Remove(listener);
+            }
         }
-    }
 
-    public static void Publish(T eventData)
-    {
-        // 발행 도중 삭제되는 경우에도 정상 처리되도록 스냅샷을 만든다
-        var listenersSnapsoht = OnEventRaised.ToArray();
-        foreach (var listener in listenersSnapsoht)
+        public static void Publish(T eventData)
         {
-            listener?.Invoke(eventData);
+            // 발행 도중 삭제되는 경우에도 정상 처리되도록 스냅샷을 만든다
+            var listenersSnapsoht = OnEventRaised.ToArray();
+            foreach (var listener in listenersSnapsoht)
+            {
+                listener?.Invoke(eventData);
+            }
         }
     }
 }

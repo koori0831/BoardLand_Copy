@@ -2,53 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class ObservableProperty<T>
+namespace Core
 {
-    [SerializeField]
-    private T value;
-
-    [field: NonSerialized]
-    public event Action<T> Changed;
-
-    public T Value
+    [Serializable]
+    public class ObservableProperty<T>
     {
-        get => value;
-        set => SetValue(value);
-    }
+        [SerializeField]
+        private T value;
 
-    public ObservableProperty(T value = default)
-    {
-        this.value = value;
-    }
+        [field: NonSerialized]
+        public event Action<T> Changed;
 
-    private void SetValue(T newValue)
-    {
-        if (EqualityComparer<T>.Default.Equals(value, newValue))
-            return;
+        public T Value
+        {
+            get => value;
+            set => SetValue(value);
+        }
 
-        value = newValue;
-        Changed?.Invoke(value);
-    }
+        public ObservableProperty(T value = default)
+        {
+            this.value = value;
+        }
 
-    public void SetValueWithoutNotify(T newValue)
-    {
-        value = newValue;
-    }
+        private void SetValue(T newValue)
+        {
+            if (EqualityComparer<T>.Default.Equals(value, newValue))
+                return;
 
-    public void Subscribe(Action<T> callback)
-    {
-        if (callback == null)
-            return;
+            value = newValue;
+            Changed?.Invoke(value);
+        }
 
-        Changed += callback;
-    }
+        public void SetValueWithoutNotify(T newValue)
+        {
+            value = newValue;
+        }
 
-    public void Unsubscribe(Action<T> callback)
-    {
-        if (callback == null)
-            return;
+        public void Subscribe(Action<T> callback)
+        {
+            if (callback == null)
+                return;
 
-        Changed -= callback;
+            Changed += callback;
+        }
+
+        public void Unsubscribe(Action<T> callback)
+        {
+            if (callback == null)
+                return;
+
+            Changed -= callback;
+        }
     }
 }

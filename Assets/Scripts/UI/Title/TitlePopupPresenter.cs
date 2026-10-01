@@ -1,3 +1,5 @@
+using Core;
+
 public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData>
 {
     private TitlePopupView titleView;

@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public abstract class MVPUIManagerBase<TEvent, TModelData> : MonoBehaviour where TEvent : IUIEvent<TModelData>
+namespace Core
 {
-    [SerializeField] private ViewBase view;
-    protected PresenterBase<TEvent, TModelData> presenter;
-    protected ModelBase<TEvent, TModelData> model;
-
-    protected virtual void OnEnable()
+    public abstract class MVPUIManagerBase<TEvent, TModelData> : MonoBehaviour where TEvent : IUIEvent<TModelData>
     {
-        model.Initialize();
-        presenter.Initialize(view, model);
-    }
+        [SerializeField] private ViewBase view;
+        protected PresenterBase<TEvent, TModelData> presenter;
+        protected ModelBase<TEvent, TModelData> model;
 
-    protected virtual void OnDisable()
-    {
-        presenter?.Dispose();
-        model?.Dispose();
+        protected virtual void OnEnable()
+        {
+            model.Initialize();
+            presenter.Initialize(view, model);
+        }
+
+        protected virtual void OnDisable()
+        {
+            presenter?.Dispose();
+            model?.Dispose();
+        }
     }
 }

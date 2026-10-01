@@ -1,3 +1,5 @@
+using Core;
+
 public class TitlePopupModel : ModelBase<TitlePopupEvent, TitlePopupData>
 {
     public TitlePopupModel()

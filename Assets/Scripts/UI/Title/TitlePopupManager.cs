@@ -1,3 +1,5 @@
+using Core;
+
 public class TitlePopupManager : MVPUIManagerBase<TitlePopupEvent, TitlePopupData>
 {
     protected override void OnEnable()
