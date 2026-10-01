@@ -8,8 +8,10 @@ using UnityEngine.EventSystems;
 public class TMPHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private TextMeshProUGUI tmp;
-    private int lastCharCount = 0;
-    private bool isHovering = false;
+
+    private int lastCharCount = -1;
+    private bool isHovering;
+    private MotionHandle currentMotion;
 
     private void Awake()
     {
@@ -18,28 +20,30 @@ public class TMPHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void PlayAnimation()
     {
-        if (tmp == null || isHovering == false)
+        if (tmp == null || !isHovering)
             return;
+
+        lastCharCount++;
 
         if (lastCharCount >= tmp.textInfo.characterCount)
             lastCharCount = 0;
 
-        LSequence.Create()
-            .Append(LMotion.Create(Vector3.zero, Vector3.up * 10f, 0.15f).BindToTMPCharPosition(tmp, lastCharCount))
-            .Append(LMotion.Create(Vector3.up * 10f, Vector3.zero, 0.15f).WithOnComplete(AfterAnimation).BindToTMPCharPosition(tmp, lastCharCount))
-            .Run();
-    }
-
-    private void AfterAnimation()
-    {
-        lastCharCount++;
-        PlayAnimation();
+        currentMotion = LMotion.Create(Vector3.zero, Vector3.up * 5f, 0.1f)
+            .WithLoops(2, LoopType.Yoyo)
+            .WithOnComplete(PlayAnimation)
+            .BindToTMPCharPosition(tmp, lastCharCount)
+            .AddTo(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (isHovering)
+            return;
+
         isHovering = true;
-        PlayAnimation();
+        if (currentMotion.IsActive() == false)
+            PlayAnimation();
     }
+
     public void OnPointerExit(PointerEventData eventData) => isHovering = false;
 }
