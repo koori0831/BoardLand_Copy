@@ -25,10 +25,11 @@ public static class EventBus<T> where T : IEvent
 
     public static void Publish(T eventData)
     {
-        // 리스트를 역순으로 순회하여, 이벤트 처리 중 구독 해제가 일어나도 에러가 나지 않도록 방지
-        for (int i = OnEventRaised.Count - 1; i >= 0; i--)
+        // 발행 도중 삭제되는 경우에도 정상 처리되도록 스냅샷을 만든다
+        var listenersSnapsoht = OnEventRaised.ToArray();
+        foreach (var listener in listenersSnapsoht)
         {
-            OnEventRaised[i]?.Invoke(eventData);
+            listener?.Invoke(eventData);
         }
     }
 }

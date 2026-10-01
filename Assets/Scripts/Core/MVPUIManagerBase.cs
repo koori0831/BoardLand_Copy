@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public abstract class MVPUIManagerBase<T, V> : MonoBehaviour where T : IUIEvent<V>
+public abstract class MVPUIManagerBase<TEvent, TModelData> : MonoBehaviour where TEvent : IUIEvent<TModelData>
 {
-    [SerializeField] ViewBase<T, V> view;
-    protected PresenterBase<T, V> presenter;
-    protected ModelBase<T, V> model;
+    [SerializeField] private ViewBase view;
+    protected PresenterBase<TEvent, TModelData> presenter;
+    protected ModelBase<TEvent, TModelData> model;
 
-    protected virtual void Awake()
+    protected virtual void OnEnable()
     {
         model.Initialize();
         presenter.Initialize(view, model);
@@ -14,7 +14,7 @@ public abstract class MVPUIManagerBase<T, V> : MonoBehaviour where T : IUIEvent<
 
     protected virtual void OnDisable()
     {
-        model?.Dispose();
         presenter?.Dispose();
+        model?.Dispose();
     }
 }
