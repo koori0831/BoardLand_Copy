@@ -2,9 +2,9 @@
 
 namespace Unit
 {
-    public class Unit : MonoBehaviour
+    public class Unit
     {
-        [SerializeField] private UnitStatus status;
+        private UnitStatus status;
         public UnitStatus Status => status;
     }
 }

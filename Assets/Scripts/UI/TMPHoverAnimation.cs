@@ -4,10 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
+[RequireComponent(typeof(TMP_Text))]
 public class TMPHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private TextMeshProUGUI tmp;
+    private TMP_Text tmp;
 
     private int lastCharCount = -1;
     private bool isHovering;
@@ -15,7 +15,7 @@ public class TMPHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Awake()
     {
-        tmp = GetComponent<TextMeshProUGUI>();
+        tmp = GetComponent<TMP_Text>();
     }
 
     private void PlayAnimation()
