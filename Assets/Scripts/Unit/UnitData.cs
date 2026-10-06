@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unit
 {
-    public class Unit
+    public class UnitData
     {
         private UnitStatus status;
         public UnitStatus Status => status;

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Unit
 {
+    [Serializable]
     public record struct UnitStatus
     {
         // 체력
