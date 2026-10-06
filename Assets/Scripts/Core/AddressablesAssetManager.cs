@@ -69,7 +69,7 @@ namespace Core
 
         public static void AddressRelease(string assetAddress, float overrideReleaseDelay = 0.0f)
         {
-            if (string.IsNullOrEmpty(assetAddress) || !assetCache.TryGetValue(assetAddress, out var rentalInfo))
+            if (string.IsNullOrEmpty(assetAddress) || assetCache.TryGetValue(assetAddress, out var rentalInfo) == false)
                 return;
 
             rentalInfo.ReferenceCount--;
