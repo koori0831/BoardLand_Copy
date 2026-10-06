@@ -18,12 +18,26 @@
       },
       "hash": "422eb124051c81a9bc3f422ebf190703c5053514"
     },
+    "com.cysharp.memorypack": {
+      "version": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/MemoryPack.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "bbde522fa3997c1331f1827ec8717b78ecc8de68"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "f74aace058f4ee7d3aa5bcc89cc98dbfb2a02892"
+    },
+    "com.github-glitchenzo.nugetforunity": {
+      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "acc1c7bc9ea34c33b830e40316fca52553878d29"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
