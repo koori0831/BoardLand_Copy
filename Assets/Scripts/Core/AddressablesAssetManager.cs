@@ -100,6 +100,8 @@ namespace Core
                     float remainingTime = kvp.Value - 1f;
                     if (remainingTime <= 0f)
                         keysToRemove.Add(kvp.Key);
+                    else
+                        releaseQueue[kvp.Key]--;
                 }
 
                 // 시간이 다 된 에셋들은 메모리에서 내리기
