@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public record SkillData
+public struct SkillData
 {
     public string skillName;
     public string skillDescription;

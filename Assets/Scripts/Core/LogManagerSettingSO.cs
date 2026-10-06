@@ -8,6 +8,7 @@ namespace Core
     {
         None = 0,
         TitlePopup = 1 << 0,
+        AssetManager = 2 << 1,
     }
 
     [CreateAssetMenu(fileName = "LogManagerSetting", menuName = "Scriptable Objects/LogManagerSetting")]
