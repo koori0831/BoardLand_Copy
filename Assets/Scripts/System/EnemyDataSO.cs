@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Unit;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Boss", menuName = "Scriptable Objects/Boss")]
-public class BossDataSO : ScriptableObject
+[CreateAssetMenu(fileName = "Enemy", menuName = "Scriptable Objects/Enemy")]
+public class EnemyDataSO : ScriptableObject
 {
     public string bossName;
     public string bossDescription;

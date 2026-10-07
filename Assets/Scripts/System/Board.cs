@@ -1,5 +1,4 @@
-﻿
-public class Board
+﻿public class Board
 {
     // 이 클래스는 서버와 클라이언트가 동일하게 사용
     // 네트워크 매니저에서 데이터를 받아서 하나의 Board 객체를 업데이트하는 방식으로 사용.

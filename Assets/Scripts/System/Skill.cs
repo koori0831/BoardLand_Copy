@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public struct SkillData
+public class Skill
 {
     public string skillName;
     public string skillDescription;

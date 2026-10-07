@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-public struct WeaponData
+public class Weapon
 {
     public string weaponName;
     public string weaponDescription;

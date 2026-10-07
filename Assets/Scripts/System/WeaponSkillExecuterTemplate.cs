@@ -9,7 +9,7 @@ public class WeaponSkillExecuterTemplate
     // 스킬 효과 목록 스냅샷 캐싱
     private List<SkillEffectBase> effects;
 
-    private void ExecuteSkill(SkillData skill, SkillContext context)
+    private void ExecuteSkill(Skill skill, SkillContext context)
     {
         // 우선 이 스킬이 실행 가능한지 확인
         foreach (ISkillCondition condition in skill.skillConditions)
