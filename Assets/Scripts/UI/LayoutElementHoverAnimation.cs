@@ -2,7 +2,6 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using LitMotion;
-using System.Collections.Generic;
 
 public enum ELayoutElementVariableType
 {
@@ -25,7 +24,7 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
     [SerializeField] private Ease easeType = Ease.Linear;
     private float originalValue = -1f;
     private LayoutElement layoutElement;
-    private List<MotionHandle> currentMotionHandles = new();
+    private MotionHandle currentMotionHandle = new();
 
     private void Awake()
     {
@@ -35,35 +34,21 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (currentMotionHandles.Count > 0)
-        {
-            foreach (MotionHandle handle in currentMotionHandles)
-                handle.TryCancel();
-            AfterMotion();
-        }
-        currentMotionHandles.Add(LMotion.Create(GetLayoutElementVariable(), hoverValue, animationTime)
+        currentMotionHandle.TryCancel();
+        currentMotionHandle = (LMotion.Create(GetLayoutElementVariable(), hoverValue, animationTime)
             .WithEase(easeType)
-            .WithOnComplete(AfterMotion)
             .Bind(_ => SetLayoutElementVariable(_))
             .AddTo(this));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (currentMotionHandles.Count > 0)
-        {
-            foreach (MotionHandle handle in currentMotionHandles)
-                handle.TryCancel();
-            AfterMotion();
-        }
-        currentMotionHandles.Add(LMotion.Create(GetLayoutElementVariable(), originalValue, animationTime)
+        currentMotionHandle.TryCancel();
+        currentMotionHandle = (LMotion.Create(GetLayoutElementVariable(), originalValue, animationTime)
             .WithEase(easeType)
-            .WithOnComplete(AfterMotion)
             .Bind(_ => SetLayoutElementVariable(_))
             .AddTo(this));
     }
-
-    private void AfterMotion() => currentMotionHandles.Clear();
 
     private float GetLayoutElementVariable()
     {
