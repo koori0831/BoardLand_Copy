@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public interface ISkillCondition
@@ -8,7 +6,7 @@ public interface ISkillCondition
     bool IsConditionMet(SkillContext context);
 }
 
-[CreateAssetMenu(fileName = "New Skill", menuName = "Skills/Skill")]
+[CreateAssetMenu(fileName = "New Skill", menuName = "Scriptable Objects/Skill")]
 public class SkillSO : ScriptableObject
 {
     public string skillName;
