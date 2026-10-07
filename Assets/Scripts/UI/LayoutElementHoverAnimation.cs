@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using LitMotion;
 using System.Collections.Generic;
 
-public enum ELayoutElemetVariableType
+public enum ELayoutElementVariableType
 {
     MinWidth,
     MinHeight,
@@ -19,7 +19,7 @@ public enum ELayoutElemetVariableType
 [RequireComponent(typeof(LayoutElement))]
 public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private ELayoutElemetVariableType variableType;
+    [SerializeField] private ELayoutElementVariableType variableType;
     [SerializeField] private float hoverValue = -1f;
     [SerializeField] private float animationTime = 0.3f;
     [SerializeField] private Ease easeType = Ease.Linear;
@@ -56,7 +56,6 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
                 handle.TryCancel();
             AfterMotion();
         }
-
         currentMotionHandles.Add(LMotion.Create(GetLayoutElementVariable(), originalValue, animationTime)
             .WithEase(easeType)
             .WithOnComplete(AfterMotion)
@@ -70,14 +69,14 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
     {
         return variableType switch
         {
-            ELayoutElemetVariableType.MinWidth => layoutElement.minWidth,
-            ELayoutElemetVariableType.MinHeight => layoutElement.minHeight,
-            ELayoutElemetVariableType.PreferredWidth => layoutElement.preferredWidth,
-            ELayoutElemetVariableType.PreferredHeight => layoutElement.preferredHeight,
-            ELayoutElemetVariableType.FlexibleWidth => layoutElement.flexibleWidth,
-            ELayoutElemetVariableType.FlexibleHeight => layoutElement.flexibleHeight,
-            ELayoutElemetVariableType.MaxWidth => layoutElement.maxWidth,
-            ELayoutElemetVariableType.MaxHeight => layoutElement.maxHeight,
+            ELayoutElementVariableType.MinWidth => layoutElement.minWidth,
+            ELayoutElementVariableType.MinHeight => layoutElement.minHeight,
+            ELayoutElementVariableType.PreferredWidth => layoutElement.preferredWidth,
+            ELayoutElementVariableType.PreferredHeight => layoutElement.preferredHeight,
+            ELayoutElementVariableType.FlexibleWidth => layoutElement.flexibleWidth,
+            ELayoutElementVariableType.FlexibleHeight => layoutElement.flexibleHeight,
+            ELayoutElementVariableType.MaxWidth => layoutElement.maxWidth,
+            ELayoutElementVariableType.MaxHeight => layoutElement.maxHeight,
             _ => -1.0f,
         };
     }
@@ -85,21 +84,21 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
     {
         switch (variableType)
         {
-            case ELayoutElemetVariableType.MinWidth:
+            case ELayoutElementVariableType.MinWidth:
                 layoutElement.minWidth = changedValue; break;
-            case ELayoutElemetVariableType.MinHeight:
+            case ELayoutElementVariableType.MinHeight:
                 layoutElement.minHeight = changedValue; break;
-            case ELayoutElemetVariableType.PreferredWidth:
+            case ELayoutElementVariableType.PreferredWidth:
                 layoutElement.preferredWidth = changedValue; break;
-            case ELayoutElemetVariableType.PreferredHeight:
+            case ELayoutElementVariableType.PreferredHeight:
                 layoutElement.preferredHeight = changedValue; break;
-            case ELayoutElemetVariableType.FlexibleWidth:
+            case ELayoutElementVariableType.FlexibleWidth:
                 layoutElement.flexibleWidth = changedValue; break;
-            case ELayoutElemetVariableType.FlexibleHeight:
+            case ELayoutElementVariableType.FlexibleHeight:
                 layoutElement.flexibleHeight = changedValue; break;
-            case ELayoutElemetVariableType.MaxWidth:
+            case ELayoutElementVariableType.MaxWidth:
                 layoutElement.maxWidth = changedValue; break;
-            case ELayoutElemetVariableType.MaxHeight:
+            case ELayoutElementVariableType.MaxHeight:
                 layoutElement.maxHeight = changedValue; break;
         }
     }
