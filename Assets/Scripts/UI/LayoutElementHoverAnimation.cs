@@ -11,8 +11,6 @@ public enum ELayoutElementVariableType
     PreferredHeight,
     FlexibleWidth,
     FlexibleHeight,
-    MaxWidth,
-    MaxHeight,
 }
 
 [RequireComponent(typeof(LayoutElement))]
@@ -60,8 +58,6 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
             ELayoutElementVariableType.PreferredHeight => layoutElement.preferredHeight,
             ELayoutElementVariableType.FlexibleWidth => layoutElement.flexibleWidth,
             ELayoutElementVariableType.FlexibleHeight => layoutElement.flexibleHeight,
-            ELayoutElementVariableType.MaxWidth => layoutElement.maxWidth,
-            ELayoutElementVariableType.MaxHeight => layoutElement.maxHeight,
             _ => -1.0f,
         };
     }
@@ -81,10 +77,6 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
                 layoutElement.flexibleWidth = changedValue; break;
             case ELayoutElementVariableType.FlexibleHeight:
                 layoutElement.flexibleHeight = changedValue; break;
-            case ELayoutElementVariableType.MaxWidth:
-                layoutElement.maxWidth = changedValue; break;
-            case ELayoutElementVariableType.MaxHeight:
-                layoutElement.maxHeight = changedValue; break;
         }
     }
 }
