@@ -68,26 +68,18 @@ public class LayoutElementHoverAnimation : MonoBehaviour, IPointerEnterHandler, 
 
     private float GetLayoutElementVariable()
     {
-        switch (variableType)
+        return variableType switch
         {
-            case ELayoutElemetVariableType.MinWidth:
-                return layoutElement.minWidth;
-            case ELayoutElemetVariableType.MinHeight:
-                return layoutElement.minHeight;
-            case ELayoutElemetVariableType.PreferredWidth:
-                return layoutElement.preferredWidth;
-            case ELayoutElemetVariableType.PreferredHeight:
-                return layoutElement.preferredHeight;
-            case ELayoutElemetVariableType.FlexibleWidth:
-                return layoutElement.flexibleWidth;
-            case ELayoutElemetVariableType.FlexibleHeight:
-                return layoutElement.flexibleHeight;
-            case ELayoutElemetVariableType.MaxWidth:
-                return layoutElement.maxWidth;
-            case ELayoutElemetVariableType.MaxHeight:
-                return layoutElement.maxHeight;
-            default: return -1.0f;
-        }
+            ELayoutElemetVariableType.MinWidth => layoutElement.minWidth,
+            ELayoutElemetVariableType.MinHeight => layoutElement.minHeight,
+            ELayoutElemetVariableType.PreferredWidth => layoutElement.preferredWidth,
+            ELayoutElemetVariableType.PreferredHeight => layoutElement.preferredHeight,
+            ELayoutElemetVariableType.FlexibleWidth => layoutElement.flexibleWidth,
+            ELayoutElemetVariableType.FlexibleHeight => layoutElement.flexibleHeight,
+            ELayoutElemetVariableType.MaxWidth => layoutElement.maxWidth,
+            ELayoutElemetVariableType.MaxHeight => layoutElement.maxHeight,
+            _ => -1.0f,
+        };
     }
     private void SetLayoutElementVariable(float changedValue)
     {
