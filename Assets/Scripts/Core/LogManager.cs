@@ -16,7 +16,8 @@ namespace Core
     {
         None = 0,
         UI = 1 << 0,
-        Addressables = 2 << 1,
+        Addressables = 1 << 1,
+        Test = 1 << 2,
     }
 
     public static class LogManager

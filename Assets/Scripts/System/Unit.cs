@@ -1,5 +1,26 @@
-﻿public class Unit
+﻿using Core;
+
+public enum EUnitType
 {
-    private UnitStatus status;
-    public UnitStatus Status => status;
+    Player1,
+    Player2,
+    Enemy1,
+    Enemy2
+}
+
+public abstract class Unit
+{
+    public UnitStatusComponent Status { get; private set; }
+
+    public Unit(UnitStatus status)
+    {
+        this.Status = new UnitStatusComponent();
+        Status.Initialize(status);
+    }
+
+    public void TakeAttack(int damage)
+    {
+        Status.ModifyHealth(-damage);
+        LogManager.Log($"피해 받음. 대미지 : {damage}, 현재 체력 : {Status.GetCurrentHealth()}/{Status.GetMaxHealth()}", ELogType.Test, ELogCategory.GameSystem);
+    }
 }

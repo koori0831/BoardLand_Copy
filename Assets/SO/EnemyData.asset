@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2372764aca2a6af4c84fc1796fa617cd, type: 3}
-  m_Name: TestUser
-  m_EditorClassIdentifier: Assembly-CSharp::UserDataSO
-  NickName: koori
-  GUID: a9b0f799-3939-45d3-a71a-db5dd92fbac6
+  m_Script: {fileID: 11500000, guid: cfb3fb6e61b8b054984520c52490d664, type: 3}
+  m_Name: EnemyData
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDataSO
+  EnemyData:
+    EnemyName: 
+    EnemyDescription: 
+    Status:
+      MaxHealth: 10
+      AttackDamage: 1

@@ -1,8 +1,8 @@
 ﻿using System;
 
 [Serializable]
-public struct UnitStatus
+public class UnitStatus
 {
-    // 체력
-    public int Health { get; set; }
+    public int MaxHealth;
+    public int AttackDamage;
 }
