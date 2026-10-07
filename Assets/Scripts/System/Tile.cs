@@ -1,4 +1,4 @@
-﻿public enum EElementType
+public enum EElementType
 {
     None,
     Earth,
