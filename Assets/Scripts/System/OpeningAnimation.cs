@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using Alchemy.Inspector;
+using Core;
 using LitMotion;
 using LitMotion.Extensions;
 using System.Collections.Generic;
@@ -7,7 +8,9 @@ using UnityEngine;
 public record struct StartOpeningAnimationEvent(List<Transform> Tiles) : IEvent;
 public class OpeningAnimation : MonoBehaviour
 {
-    [SerializeReference] private Transform tileLowPos, tileHighPos;
+    [SerializeField] private Transform tileLowPos, tileHighPos;
+    [SerializeField] private bool debugMode = false;
+    [ShowIf(nameof(debugMode))][SerializeField] private List<Transform> debugTiles;
     private float tileLowPosY => tileLowPos.position.y;
     private float tileHighPosY => tileHighPos.position.y;
     private List<Transform> tiles = new();
@@ -36,16 +39,28 @@ public class OpeningAnimation : MonoBehaviour
     {
         currentIndex++;
         if (currentIndex >= tiles.Count)
+        {
+            isAnimationRunning = false;
             return;
+        }
 
-        LMotion.Create(tileHighPosY, tileLowPosY, 0.3f)
+        LMotion.Create(tileHighPosY, tileLowPosY, 0.1f)
             .WithEase(Ease.OutExpo)
             .WithOnComplete(StartAnimation)
-            .BindToPositionY(tiles[currentIndex]);
+            .BindToPositionY(tiles[currentIndex])
+            .AddTo(this);
     }
 
     private void OnDestroy()
     {
         EventBus<StartOpeningAnimationEvent>.Unsubscribe(OnRequestStartAnimaiton);
+    }
+
+    [ShowIf(nameof(debugMode))]
+    [LabelText("테스트용 이벤트 발행")]
+    [Button]
+    private void AnimationTest()
+    {
+        EventBus<StartOpeningAnimationEvent>.Publish(new(debugTiles));
     }
 }
