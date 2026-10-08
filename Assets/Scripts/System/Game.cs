@@ -9,8 +9,7 @@ public class Game
     private Action turnEndCallBack;
     private int playerPosition = 0;
     private Tiles tiles;
-    private Dictionary<EPlayerInputType, Action<int>> playerInputActionDictionary = null;
-    private Dictionary<ETileType, Action<int>> playerTileActionDictionary = null;
+    private Dictionary<EPlayerInputType, Action<Dice>> playerInputActionDictionary = null;
     private static readonly int diceInventorySize = 5;
 
     public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
@@ -19,17 +18,11 @@ public class Game
         enemyUnit = new Enemy(enemyData.Status);
         this.tiles = tiles;
 
-        playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<int>>()
+        playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
         {
             [EPlayerInputType.Move] = PlayerMove,
             [EPlayerInputType.Action] = PlayerTileAction,
             [EPlayerInputType.TurnEnd] = PlayerTurnEnd,
-        };
-        playerTileActionDictionary = new Dictionary<ETileType, Action<int>>()
-        {
-            [ETileType.Attack] = PlayerAttack,
-            [ETileType.Deffend] = PlayerDffend,
-            [ETileType.Heal] = PlayerHeal,
         };
     }
 
@@ -59,9 +52,9 @@ public class Game
     private void OnPlayerInput(PlayerInputResult inputResult, Action moveNext)
     {
         LogManager.Log($"플레이어 행동({inputResult.ActionType}).", ELogType.Test, ELogCategory.GameSystem);
-        if (playerInputActionDictionary.TryGetValue(inputResult.ActionType, out Action<int> playerAction))
+        if (playerInputActionDictionary.TryGetValue(inputResult.ActionType, out Action<Dice> playerAction))
         {
-            playerAction.Invoke(inputResult.Dice.DiceNumder);
+            playerAction.Invoke(inputResult.Dice);
         }
         else
         {
@@ -83,38 +76,18 @@ public class Game
         playerUnit.DiceInventorySetting(diceList);
     }
 
-    private void PlayerMove(int diceNumber)
+    private void PlayerMove(Dice dice)
     {
-        playerPosition = (playerPosition + diceNumber) % tiles.TileList.Count;
-        LogManager.Log($"플레이어 {diceNumber}만큼 이동. 현재 타일 타입: {tiles.TileList[playerPosition].TileType}", ELogType.Test, ELogCategory.GameSystem);
+        playerPosition = (playerPosition + dice.DiceNumber) % tiles.TileList.Count;
+        LogManager.Log($"플레이어 {dice.DiceNumber}만큼 이동. 현재 타일 타입: {tiles.TileList[playerPosition].GetType()}", ELogType.Test, ELogCategory.GameSystem);
     }
-    private void PlayerTileAction(int diceNumber)
+    private void PlayerTileAction(Dice dice)
     {
-        ETileType tileType = tiles.TileList[playerPosition].TileType;
-        if (playerTileActionDictionary.TryGetValue(tileType, out Action<int> tileAction))
-        {
-            tileAction.Invoke(diceNumber);
-        }
-        else
-        {
-            LogManager.Log($"처리할 수 없는 타일({tileType}).", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Error);
-        }
+        TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice);
+        tiles.TileList[playerPosition].TileAction(actionContext);
     }
-    private void PlayerTurnEnd(int diceNumber)
+    private void PlayerTurnEnd(Dice dice)
     {
-    }
-
-    private void PlayerAttack(int diceNumber)
-    {
-        enemyUnit.TakeAttack(diceNumber);
-    }
-    private void PlayerDffend(int diceNumber)
-    {
-        playerUnit.Status.ModifyDeffendPoint(diceNumber);
-    }
-    private void PlayerHeal(int diceNumber)
-    {
-        playerUnit.TakeHeal(diceNumber);
     }
 
     private void EnemyPhase(Action moveNext)

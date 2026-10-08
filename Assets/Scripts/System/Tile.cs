@@ -14,16 +14,16 @@ public enum ETileType
     // 이후에 기믹 요소가 있는 특수 타일이 추가될 수 있음
 }
 
-public struct Tile
+public abstract class Tile
 {
     public EElementType ElementType;
-    public ETileType TileType;
     public int TileLevel;
 
-    public Tile(EElementType elementType, ETileType tileType, int tileLevel = 1)
+    public Tile(EElementType elementType)
     {
-        this.ElementType = elementType;
-        this.TileType = tileType;
-        this.TileLevel = tileLevel;
+        ElementType = elementType;
+        TileLevel = 1;
     }
+
+    public abstract void TileAction(TileActionContext actionContext);
 }

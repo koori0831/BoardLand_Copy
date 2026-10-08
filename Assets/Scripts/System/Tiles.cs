@@ -10,9 +10,9 @@ public class Tiles
         TileList = new List<Tile>();
         for (int i = 0; i < boardSize; i++)
         {
-            EElementType elementType = new RandomEnumValue<EElementType>().RandomEnum;
             ETileType tileType = new RandomEnumValue<ETileType>().RandomEnum;
-            TileList.Add(new Tile(elementType, tileType));
+            EElementType elementType = new RandomEnumValue<EElementType>().RandomEnum;
+            TileList.Add(TileFactory.Create(tileType, elementType));
         }
     }
 }
