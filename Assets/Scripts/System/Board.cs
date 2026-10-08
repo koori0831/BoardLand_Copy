@@ -11,22 +11,18 @@ public enum EPlayerActionType
 public class Board
 {
     private static readonly int boardSize = 12;
+    private static readonly int playerCount = 2;
 
-    private Game player1Game;
-    private Game player2Game;
+    private List<Game> games = new();
     private List<Tile> tiles = new();
-    private EUnitType currentTurnUnit;
+    private int currentGameIndex;
 
     public Board(PlayerData playerData, EnemyData enemyData)
     {
-        player1Game = new Game(playerData, enemyData);
-        player2Game = new Game(playerData, enemyData);
-        
+        for (int i = 0; i < playerCount; i++)
+            games.Add(new Game(playerData, enemyData));
+
         TileInitialize();
-        
-        // 우선 무조건 Player1 부터 턴을 시작한다.
-        currentTurnUnit = EUnitType.Player1;
-        LogManager.Log($"{currentTurnUnit}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
     }
 
     private void TileInitialize()
@@ -39,61 +35,29 @@ public class Board
         }
     }
 
-    public void PlayerInput(EPlayerActionType actionType)
+    public void StartGame()
     {
-        if (IsPlayerTurn() == false)
-        {
-            LogManager.Log("플레이어 턴이 아닙니다.", ELogType.Test, ELogCategory.GameSystem, ELogMessageType.Warning);
-            return;
-        }
-
-        LogManager.Log($"{currentTurnUnit}이 행동({actionType}) 시도.", ELogType.Test, ELogCategory.GameSystem);
-
-        if (currentTurnUnit == EUnitType.Player1)
-            player1Game.PlayerAction(actionType, TurnEndCallback);
-        else
-            player2Game.PlayerAction(actionType, TurnEndCallback);
+        // 우선 무조건 Player1(0) 부터 턴을 시작한다.
+        currentGameIndex = 0;
+        StartCurrentTurn();
     }
 
-    private void StartEnemyTurn()
+    public void Dispose()
     {
-        if (IsPlayerTurn())
-        {
-            LogManager.Log("적의 턴이 아닙니다.", ELogType.Test, ELogCategory.GameSystem, ELogMessageType.Warning);
-            return;
-        }
+        foreach (var game in games)
+            game.Dispose();
+    }
 
-        if (currentTurnUnit == EUnitType.Enemy1)
-            player1Game.StartEnemyTurn(TurnEndCallback);
-        else
-            player2Game.StartEnemyTurn(TurnEndCallback);
+    private void StartCurrentTurn()
+    {
+        LogManager.Log($"Player{currentGameIndex + 1}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
+        games[currentGameIndex].TurnStart(TurnEndCallback);
     }
 
     private void TurnEndCallback()
     {
-        LogManager.Log($"{currentTurnUnit}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
-        currentTurnUnit = GetNextTurnUnitType();
-        LogManager.Log($"{currentTurnUnit}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
-        if (IsPlayerTurn() == false)
-            StartEnemyTurn();
-    }
-
-    private EUnitType GetNextTurnUnitType()
-    {
-        return currentTurnUnit switch
-        {
-            EUnitType.Player1 => EUnitType.Enemy1,
-            EUnitType.Player2 => EUnitType.Enemy2,
-            EUnitType.Enemy1 => EUnitType.Player2,
-            EUnitType.Enemy2 => EUnitType.Player1,
-            _ => EUnitType.Player1,
-        };
-    }
-    private bool IsPlayerTurn()
-    {
-        if (currentTurnUnit == EUnitType.Player1 || currentTurnUnit == EUnitType.Player2)
-            return true;
-        else
-            return false;
+        LogManager.Log($"Player{currentGameIndex + 1}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
+        currentGameIndex = (currentGameIndex + 1) % games.Count;
+        StartCurrentTurn();
     }
 }

@@ -1,13 +1,5 @@
 ﻿using Core;
 
-public enum EUnitType
-{
-    Player1,
-    Player2,
-    Enemy1,
-    Enemy2
-}
-
 public abstract class Unit
 {
     public UnitStatusComponent Status { get; private set; }

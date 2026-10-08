@@ -5,6 +5,7 @@ public class Game
 {
     private Player playerUnit;
     private Enemy enemyUnit;
+    private Action turnEndCallBack;
 
     public Game(PlayerData playerData, EnemyData enemyData)
     {
@@ -12,8 +13,22 @@ public class Game
         enemyUnit = new Enemy(enemyData.Status);
     }
 
-    public void PlayerAction(EPlayerActionType actionType, Action turnEndCallBack)
+    public void TurnStart(Action turnEndCallBack)
     {
+        this.turnEndCallBack = turnEndCallBack;
+        playerUnit.InputReady(OnPlayerInput);
+    }
+
+    public void Dispose()
+    {
+        playerUnit.Dispose();
+        turnEndCallBack = null;
+    }
+
+    private void OnPlayerInput(EPlayerActionType actionType)
+    {
+        LogManager.Log($"플레이어 행동({actionType}).", ELogType.Test, ELogCategory.GameSystem);
+
         switch (actionType)
         {
             case EPlayerActionType.Move:
@@ -25,13 +40,21 @@ public class Game
             case EPlayerActionType.TurnEnd:
                 break;
         }
-        turnEndCallBack.Invoke();
+
+        EnemyPhase();
     }
 
-    public void StartEnemyTurn(Action turnEndCallBack)
+    private void EnemyPhase()
     {
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
         playerUnit.TakeAttack(enemyUnit.Status.GetCurrentAttackDamage());
-        turnEndCallBack.Invoke();
+        EndTurn();
+    }
+
+    private void EndTurn()
+    {
+        var callback = turnEndCallBack;
+        turnEndCallBack = null;
+        callback?.Invoke();
     }
 }

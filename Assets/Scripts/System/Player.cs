@@ -1,4 +1,5 @@
 ﻿using Core;
+using System;
 using System.Collections.Generic;
 
 public class Player : Unit
@@ -9,8 +10,21 @@ public class Player : Unit
     // 가지고 있는 아이템(무기) 목록
     private List<Weapon> weaponInventory = new();
 
+    private readonly InputComponent input;
+
     public Player(UnitStatus status) : base(status)
     {
+        input = new InputComponent();
+    }
+
+    public void InputReady(Action<EPlayerActionType> inputCallback)
+    {
+        input.Enable(inputCallback);
+    }
+
+    public void Dispose()
+    {
+        input.Disable();
     }
 
     public void Move()

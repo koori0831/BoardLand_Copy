@@ -23,25 +23,28 @@ public class TestGameManagerMono : MonoBehaviour
         //Game user = new Game(player, enemy);
         //Game otherUser = new Game(otherPlayer, otherEnemy);
         LogManager.Log($"게임 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
+        board?.Dispose();
         board = new Board(playerDataSO.PlayerData, enemyDataSO.EnemyData);
+        board.StartGame();
     }
 
     [LabelText("이동하기")]
     [Button]
-    private void PlayerInputMove()
-    {
-        board.PlayerInput(EPlayerActionType.Move);
-    }
+    private void PlayerInputMove() => PublishInput(EPlayerActionType.Move);
     [LabelText("공격하기")]
     [Button]
-    private void PlayerInputAttack()
-    {
-        board.PlayerInput(EPlayerActionType.Attack);
-    }
+    private void PlayerInputAttack() => PublishInput(EPlayerActionType.Attack);
     [LabelText("턴 종료하기")]
     [Button]
-    private void PlayerInputTurnEnd()
+    private void PlayerInputTurnEnd() => PublishInput(EPlayerActionType.TurnEnd);
+
+    private void PublishInput(EPlayerActionType actionType)
     {
-        board.PlayerInput(EPlayerActionType.TurnEnd);
+        EventBus<PlayerInputEvent>.Publish(new PlayerInputEvent(actionType));
+    }
+
+    private void OnDestroy()
+    {
+        board?.Dispose();
     }
 }
