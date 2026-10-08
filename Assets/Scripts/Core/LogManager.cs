@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Core
 {
     [Flags]
-    public enum ELogMessageType
+    public enum ELogLevel
     {
         None = 0,
         Info = 1 << 0,
@@ -22,12 +22,12 @@ namespace Core
 
     public static class LogManager
     {
-        private static ELogMessageType showingMessageType = ELogMessageType.None;
+        private static ELogLevel showingMessageType = ELogLevel.None;
         private static ELogCategory showingCategory = ELogCategory.None;
 
         // 로그를 볼 항목으로 선택한 것들만 로그 확인
         // 에디터에서만 로그 발생하도록
-        public static void Log(string message, ELogType logType = ELogType.None, ELogCategory category = ELogCategory.None, ELogMessageType messageType = ELogMessageType.Info)
+        public static void Log(string message, ELogType logType = ELogType.None, ELogCategory category = ELogCategory.None, ELogLevel messageType = ELogLevel.Info)
         {
 #if UNITY_EDITOR
             if (IsLogEnabled(messageType, category) == false)
@@ -36,13 +36,13 @@ namespace Core
             string logMessage = $"[{logType}][{category}] {message}";
             switch (messageType)
             {
-                case ELogMessageType.Info:
+                case ELogLevel.Info:
                     Debug.Log(logMessage);
                     break;
-                case ELogMessageType.Warning:
+                case ELogLevel.Warning:
                     Debug.LogWarning(logMessage);
                     break;
-                case ELogMessageType.Error:
+                case ELogLevel.Error:
                     Debug.LogError(logMessage);
                     break;
                 default:
@@ -52,13 +52,13 @@ namespace Core
 #endif
         }
 
-        public static void SetLogFilter(ELogMessageType messageType, ELogCategory category)
+        public static void SetLogFilter(ELogLevel messageType, ELogCategory category)
         {
             showingMessageType = messageType;
             showingCategory = category;
         }
 
-        public static bool IsLogEnabled(ELogMessageType messageType, ELogCategory category)
+        public static bool IsLogEnabled(ELogLevel messageType, ELogCategory category)
         {
             return (showingMessageType & messageType) != 0 && (showingCategory & category) != 0;
         }

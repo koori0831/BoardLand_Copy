@@ -15,18 +15,18 @@ namespace Core
     [CreateAssetMenu(fileName = "LogManagerSetting", menuName = "Scriptable Objects/LogManagerSetting")]
     public class LogManagerSettingSO : ScriptableObject
     {
-        public ELogMessageType ShowingMessageType;
+        public ELogLevel ShowingLogLevel;
         public ELogCategory ShowingCategory;
 
 #if UNITY_EDITOR
         public void OnEnable()
         {
-            LogManager.SetLogFilter(ShowingMessageType, ShowingCategory);
+            LogManager.SetLogFilter(ShowingLogLevel, ShowingCategory);
         }
 
         public void OnValidate()
         {
-            LogManager.SetLogFilter(ShowingMessageType, ShowingCategory);
+            LogManager.SetLogFilter(ShowingLogLevel, ShowingCategory);
         }
 #endif
     }

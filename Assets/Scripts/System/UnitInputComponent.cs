@@ -1,13 +1,13 @@
 ﻿using Core;
 using System;
 
-public record struct PlayerInputEvent(EPlayerActionType ActionType) : IEvent;
-public class InputComponent
+public record struct PlayerInputEvent(EPlayerInputType ActionType, int DiceIndex) : IEvent;
+public class UnitInputComponent
 {
-    private Action<EPlayerActionType> inputCallback;
+    private Action<EPlayerInputType, int> inputCallback;
     public bool IsEnabled { get; private set; }
 
-    public void Enable(Action<EPlayerActionType> callback)
+    public void Enable(Action<EPlayerInputType, int> callback)
     {
         inputCallback = callback;
         if (IsEnabled)
@@ -29,7 +29,7 @@ public class InputComponent
 
     private void OnInput(PlayerInputEvent inputEvent)
     {
-        inputCallback?.Invoke(inputEvent.ActionType);
+        inputCallback?.Invoke(inputEvent.ActionType, inputEvent.DiceIndex);
         Disable();
     }
 }

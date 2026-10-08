@@ -44,7 +44,7 @@ namespace Core
 
                 if (handle.Status != AsyncOperationStatus.Succeeded)
                 {
-                    LogManager.Log($"에셋 로드 실패: {assetAddress}", ELogType.Addressables, ELogCategory.AssetManager, ELogMessageType.Error);
+                    LogManager.Log($"에셋 로드 실패: {assetAddress}", ELogType.Addressables, ELogCategory.AssetManager, ELogLevel.Error);
                     assetCache.Remove(assetAddress);
                     return null;
                 }

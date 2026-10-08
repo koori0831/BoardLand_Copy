@@ -17,4 +17,5 @@ MonoBehaviour:
     EnemyDescription: 
     Status:
       MaxHealth: 10
+      MaxDeffendPoint: 5
       AttackDamage: 1

@@ -1,10 +1,10 @@
 ﻿using Core;
 using System.Collections.Generic;
 
-public enum EPlayerActionType
+public enum EPlayerInputType
 {
     Move,
-    Attack,
+    Action,
     TurnEnd,
 }
 
@@ -14,25 +14,15 @@ public class Board
     private static readonly int playerCount = 2;
 
     private List<Game> games = new();
-    private List<Tile> tiles = new();
+    private Tiles tiles;
     private int currentGameIndex;
 
     public Board(PlayerData playerData, EnemyData enemyData)
     {
+        tiles = new Tiles(boardSize);
+
         for (int i = 0; i < playerCount; i++)
-            games.Add(new Game(playerData, enemyData));
-
-        TileInitialize();
-    }
-
-    private void TileInitialize()
-    {
-        for (int i = 0; i < boardSize; i++)
-        {
-            EElementType elementType = new RandomEnumValue<EElementType>().GetRandomEnumValue();
-            ETileType tileType = new RandomEnumValue<ETileType>().GetRandomEnumValue();
-            tiles.Add(new Tile(elementType, tileType));
-        }
+            games.Add(new Game(playerData, enemyData, tiles));
     }
 
     public void StartGame()

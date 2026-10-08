@@ -4,32 +4,44 @@ using System.Collections.Generic;
 
 public class Player : Unit
 {
-    private int position = 0; // currentTileIndex
-    // 가지고 있는 주사위(카드) 목록
-    private List<DiceCard> cardInventory = new();
+    // 가지고 있는 주사위 목록
+    private List<Dice> diceInventory = null;
     // 가지고 있는 아이템(무기) 목록
-    private List<Weapon> weaponInventory = new();
+    private List<Weapon> weaponInventory = null;
 
-    private readonly InputComponent input;
+    private UnitInputComponent inputComponenet;
+    private Action<PlayerInputResult> inputCallback;
 
     public Player(UnitStatus status) : base(status)
     {
-        input = new InputComponent();
+        inputComponenet = new UnitInputComponent();
+        diceInventory = new List<Dice>();
+        weaponInventory = new List<Weapon>();
     }
 
-    public void InputReady(Action<EPlayerActionType> inputCallback)
+    public void InputReady(Action<PlayerInputResult> inputCallback)
     {
-        input.Enable(inputCallback);
+        this.inputCallback = inputCallback;
+        inputComponenet.Enable(OnInput);
+    }
+
+    public void OnInput(EPlayerInputType actionType, int diceIndex)
+    {
+        if (diceIndex < 0 || diceIndex > diceInventory.Count)
+        {
+            LogManager.Log($"인벤토리에 {diceIndex}번 인덱스가 없습니다", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Error);
+        }
+        PlayerInputResult inputResult = new PlayerInputResult(actionType, diceInventory[diceIndex]);
+        inputCallback.Invoke(inputResult);
+    }
+
+    public void DiceInventorySetting(List<Dice> diceList)
+    {
+        diceInventory = diceList;
     }
 
     public void Dispose()
     {
-        input.Disable();
-    }
-
-    public void Move()
-    {
-        position += 1;
-        LogManager.Log($"플레이어 이동. 현재 위치 : {position}", ELogType.Test, ELogCategory.GameSystem);
+        inputComponenet.Disable();
     }
 }

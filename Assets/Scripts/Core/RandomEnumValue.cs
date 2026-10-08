@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace Core
 {
     public struct RandomEnumValue<T>
     {
-        public T GetRandomEnumValue()
+        public T RandomEnum;
+        public RandomEnumValue()
         {
             var enumValues = System.Enum.GetValues(enumType: typeof(T));
-            return (T)enumValues.GetValue(Random.Range(0, enumValues.Length));
+            RandomEnum = (T)enumValues.GetValue(new Random().Next(0, enumValues.Length));
         }
     }
 }

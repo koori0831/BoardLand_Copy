@@ -10,6 +10,9 @@ public class TestGameManagerMono : MonoBehaviour
     [SerializeField] 
     private EnemyDataSO enemyDataSO;
 
+    [SerializeField]
+    private int diceIndex;
+
     private Board board;
 
     [LabelText("게임 시작")]
@@ -30,17 +33,17 @@ public class TestGameManagerMono : MonoBehaviour
 
     [LabelText("이동하기")]
     [Button]
-    private void PlayerInputMove() => PublishInput(EPlayerActionType.Move);
-    [LabelText("공격하기")]
+    private void PlayerInputMove() => PublishInput(EPlayerInputType.Move, diceIndex);
+    [LabelText("행동하기")]
     [Button]
-    private void PlayerInputAttack() => PublishInput(EPlayerActionType.Attack);
+    private void PlayerInputAttack() => PublishInput(EPlayerInputType.Action, diceIndex);
     [LabelText("턴 종료하기")]
     [Button]
-    private void PlayerInputTurnEnd() => PublishInput(EPlayerActionType.TurnEnd);
+    private void PlayerInputTurnEnd() => PublishInput(EPlayerInputType.TurnEnd, 0);
 
-    private void PublishInput(EPlayerActionType actionType)
+    private void PublishInput(EPlayerInputType actionType, int diceIndex)
     {
-        EventBus<PlayerInputEvent>.Publish(new PlayerInputEvent(actionType));
+        EventBus<PlayerInputEvent>.Publish(new PlayerInputEvent(actionType, diceIndex));
     }
 
     private void OnDestroy()

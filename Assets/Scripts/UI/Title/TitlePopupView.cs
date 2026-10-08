@@ -9,7 +9,7 @@ public class TitlePopupView : ViewBase
         titlePresenter = presenter as TitlePopupPresenter;
         if (titlePresenter == null)
         {
-            LogManager.Log("Presenter is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogMessageType.Error);
+            LogManager.Log("Presenter is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogLevel.Error);
             return;
         }
     }

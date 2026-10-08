@@ -15,7 +15,7 @@ public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData
 
         if (titleView == null || titleModel == null)
         {
-            LogManager.Log("View or Model is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogMessageType.Error);
+            LogManager.Log("View or Model is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogLevel.Error);
             return;
         }
     }

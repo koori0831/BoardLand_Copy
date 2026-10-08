@@ -15,4 +15,5 @@ MonoBehaviour:
   PlayerData:
     Status:
       MaxHealth: 10
+      MaxDeffendPoint: 5
       AttackDamage: 1

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e900a5e9f5a0e48bcd65583fd455e0, type: 3}
   m_Name: LogSetting
   m_EditorClassIdentifier: Assembly-CSharp::LogManagerDataSO
-  ShowingMessageType: -1
+  ShowingLogLevel: -1
   ShowingCategory: -1
