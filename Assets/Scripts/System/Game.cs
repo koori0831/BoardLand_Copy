@@ -53,7 +53,7 @@ public class Game
 
     private void EndTurn()
     {
-        var callback = turnEndCallBack;
+        Action callback = turnEndCallBack;
         turnEndCallBack = null;
         callback?.Invoke();
     }

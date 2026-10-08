@@ -29,7 +29,8 @@ public class InputComponent
 
     private void OnInput(PlayerInputEvent inputEvent)
     {
+        Action<EPlayerActionType> callback = inputCallback;
         Disable();
-        inputCallback?.Invoke(inputEvent.ActionType);
+        callback?.Invoke(inputEvent.ActionType);
     }
 }

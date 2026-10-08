@@ -44,7 +44,7 @@ public class Board
 
     public void Dispose()
     {
-        foreach (var game in games)
+        foreach (Game game in games)
             game.Dispose();
     }
 
