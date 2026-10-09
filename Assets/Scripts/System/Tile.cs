@@ -20,8 +20,9 @@ public abstract class Tile
     public ETileType TileType;
     public int TileLevel;
 
-    public Tile(EElementType elementType)
+    public Tile(ETileType tileType, EElementType elementType)
     {
+        TileType = tileType;
         ElementType = elementType;
         TileLevel = 1;
     }
