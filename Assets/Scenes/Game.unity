@@ -1648,6 +1648,7 @@ MonoBehaviour:
   tileRendererPrefab: {fileID: 2745424469102159645, guid: 65c0a7f8e90ad364a9109958116e84a5, type: 3}
   gameRendererPrefab: {fileID: 7829755066583883327, guid: ccf5ce4b2bb59b042bb875c5e860d862, type: 3}
   tileRadius: 4.3
+  tilePositionOffest: {x: 0, y: 0.13, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

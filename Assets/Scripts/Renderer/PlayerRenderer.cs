@@ -8,7 +8,7 @@ public class PlayerRenderer : UnitRenderer
     [SerializeField] private float stepDuration = 0.2f;
 
     private MotionHandle moveMotion;
-    private readonly List<Vector3> path = new();
+    private List<Vector3> path = new();
     private int pathIndex;
 
     public void Teleport(Vector3 position)
@@ -18,7 +18,7 @@ public class PlayerRenderer : UnitRenderer
     }
 
     // path에 담긴 위치들을 순서대로 한 칸씩 방문한다.
-    public void Move(IReadOnlyList<Vector3> path)
+    public void Move(List<Vector3> path)
     {
         StopMove();
         this.path.AddRange(path);

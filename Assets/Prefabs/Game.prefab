@@ -845,6 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameRenderer
   playerRenderer: {fileID: 8546934586450238187}
   enemyRenderer: {fileID: 6637506396672827800}
+  playerPositionOffset: {x: 0, y: 0.9, z: 0}
 --- !u!1 &5345845102659696764
 GameObject:
   m_ObjectHideFlags: 0

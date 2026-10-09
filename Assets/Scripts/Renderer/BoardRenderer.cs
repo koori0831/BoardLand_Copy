@@ -7,6 +7,7 @@ public class BoardRenderer : MonoBehaviour
     [SerializeField] private GameRenderer gameRendererPrefab;
 
     [SerializeField] private float tileRadius = 4f;
+    [SerializeField] private Vector3 tilePositionOffest;
 
     private List<TileRenderer> tileRenderers = new();
     private List<GameRenderer> gameRenderers = new();
@@ -32,6 +33,7 @@ public class BoardRenderer : MonoBehaviour
             TileRenderer tileRenderer = Instantiate(tileRendererPrefab, transform);
             tileRenderer.transform.localPosition = GetTileLocalPosition(i, tileCount);
             tileRenderer.transform.LookAt(transform);
+            tileRenderer.transform.localPosition += tilePositionOffest;
             tileRenderer.Bind(tiles.TileList[i]);
             tileRenderers.Add(tileRenderer);
         }
