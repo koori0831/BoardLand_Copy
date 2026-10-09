@@ -13,16 +13,16 @@ public class Board
     private static readonly int boardSize = 12;
     private static readonly int playerCount = 2;
 
-    private List<Game> games = new();
-    private Tiles tiles;
+    public List<Game> Games { get; private set; } = new();
+    public Tiles Tiles { get; private set; }
     private int currentGameIndex;
 
     public Board(PlayerData playerData, EnemyData enemyData)
     {
-        tiles = new Tiles(boardSize);
+        Tiles = new Tiles(boardSize);
 
         for (int i = 0; i < playerCount; i++)
-            games.Add(new Game(playerData, enemyData, tiles));
+            Games.Add(new Game(playerData, enemyData, Tiles));
     }
 
     public void StartGame()
@@ -34,20 +34,20 @@ public class Board
 
     public void Dispose()
     {
-        foreach (Game game in games)
+        foreach (Game game in Games)
             game.Dispose();
     }
 
     private void StartCurrentTurn()
     {
         LogManager.Log($"Player{currentGameIndex + 1}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
-        games[currentGameIndex].TurnStart(TurnEndCallback);
+        Games[currentGameIndex].TurnStart(TurnEndCallback);
     }
 
     private void TurnEndCallback()
     {
         LogManager.Log($"Player{currentGameIndex + 1}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
-        currentGameIndex = (currentGameIndex + 1) % games.Count;
+        currentGameIndex = (currentGameIndex + 1) % Games.Count;
         StartCurrentTurn();
     }
 }

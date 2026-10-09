@@ -2261,7 +2261,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1296776633}
-  - component: {fileID: 1296776634}
   m_Layer: 0
   m_Name: Tiles
   m_TagString: Untagged
@@ -2296,34 +2295,6 @@ Transform:
   - {fileID: 831699563}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1296776634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296776632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96649abffd426bb4683b96035b643c27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OpeningAnimation
-  tileLowPos: {fileID: 1814472459}
-  tileHighPos: {fileID: 694599403}
-  debugMode: 1
-  debugTiles:
-  - {fileID: 1108003916}
-  - {fileID: 1773361929}
-  - {fileID: 1170131434}
-  - {fileID: 988901492}
-  - {fileID: 1444013664}
-  - {fileID: 1445124152}
-  - {fileID: 1637988436}
-  - {fileID: 235692182}
-  - {fileID: 1055304185}
-  - {fileID: 1622851090}
-  - {fileID: 1687564891}
-  - {fileID: 831699563}
 --- !u!1 &1348611836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,6 +3575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestGameManagerMono
   playerDataSO: {fileID: 11400000, guid: 593d8db829b286646acbb948b54bd7c5, type: 2}
   enemyDataSO: {fileID: 11400000, guid: c393662804a72df4fac1635ea9cec719, type: 2}
+  boardRenderer: {fileID: 0}
   diceIndex: 0
 --- !u!4 &1837889936
 Transform:

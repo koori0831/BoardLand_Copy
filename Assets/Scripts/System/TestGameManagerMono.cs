@@ -11,6 +11,9 @@ public class TestGameManagerMono : MonoBehaviour
     private EnemyDataSO enemyDataSO;
 
     [SerializeField]
+    private BoardRenderer boardRenderer;
+
+    [SerializeField]
     private int diceIndex;
 
     private Board board;
@@ -28,6 +31,8 @@ public class TestGameManagerMono : MonoBehaviour
         LogManager.Log($"게임 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
         board?.Dispose();
         board = new Board(playerDataSO.PlayerData, enemyDataSO.EnemyData);
+        if (boardRenderer != null)
+            boardRenderer.Bind(board);
         board.StartGame();
     }
 
