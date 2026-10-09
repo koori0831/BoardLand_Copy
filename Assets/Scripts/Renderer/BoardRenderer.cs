@@ -31,6 +31,7 @@ public class BoardRenderer : MonoBehaviour
         {
             TileRenderer tileRenderer = Instantiate(tileRendererPrefab, transform);
             tileRenderer.transform.localPosition = GetTileLocalPosition(i, tileCount);
+            tileRenderer.transform.LookAt(transform);
             tileRenderer.Bind(tiles.TileList[i]);
             tileRenderers.Add(tileRenderer);
         }
@@ -61,5 +62,10 @@ public class BoardRenderer : MonoBehaviour
 
         tileRenderers.Clear();
         gameRenderers.Clear();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, tileRadius);
     }
 }
