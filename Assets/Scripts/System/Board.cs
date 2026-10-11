@@ -1,4 +1,5 @@
 ﻿using Core;
+using System;
 using System.Collections.Generic;
 
 public enum EPlayerInputType
@@ -16,6 +17,9 @@ public class Board
     public List<Game> Games { get; private set; } = new();
     public Tiles Tiles { get; private set; }
     private int currentGameIndex;
+
+    public int CurrentGameIndex => currentGameIndex;
+    public event Action<int> CurrentGameChanged;
 
     public Board(PlayerData playerData, EnemyData enemyData)
     {
@@ -36,11 +40,13 @@ public class Board
     {
         foreach (Game game in Games)
             game.Dispose();
+        CurrentGameChanged = null;
     }
 
     private void StartCurrentTurn()
     {
         LogManager.Log($"Player{currentGameIndex + 1}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
+        CurrentGameChanged?.Invoke(currentGameIndex);
         Games[currentGameIndex].TurnStart(TurnEndCallback);
     }
 
