@@ -4,14 +4,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "Scriptable Objects/Enemy")]
 public class EnemyDataSO : ScriptableObject
 {
-    public EnemyData EnemyData;
+    public string EnemyName;
+    public string EnemyDescription;
+    public List<SkillSO> Skills; // 보스는 스킬 목록에서 사용 가능한 스킬을 랜덤으로 선택해 사용한다.
+    public UnitStatus Status;
 
-    //public List<Skill> GetSkillList()
-    //{
-    //    List<Skill> results = new();
-    //    foreach (SkillSO skillSO in skills)
-    //        results.Add(new Skill(skillSO.skillName, skillSO.skillDescription, skillSO.skillIcon, skillSO.skillConditions, skillSO.skillEffects));
+    public EnemyData ConvertEnemyData()
+    {
+        List<Skill> skillList = new();
+        foreach (SkillSO skillSO in Skills)
+            skillList.Add(new Skill(skillSO.skillName, skillSO.skillDescription, skillSO.skillIcon, skillSO.skillConditions, skillSO.skillEffects));
 
-    //    return results;
-    //}
+        return new EnemyData(EnemyName, EnemyDescription, skillList, Status);
+    }
 }

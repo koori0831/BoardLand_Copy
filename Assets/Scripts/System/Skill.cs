@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public interface ISkillCondition
+{
+    bool IsConditionMet(SkillContext context);
+}
+
 public class Skill
 {
     public string skillName;
