@@ -38,14 +38,19 @@ public class Game
         this.turnEndCallBack = turnEndCallBack;
 
         RollDice();
+        GameCallbackChain();
+    }
+
+    private void GameCallbackChain()
+    {
         playerUnit.InputReady(inputResult =>
         {
             OnPlayerInput(inputResult, () =>
             {
-                EnemyPhase(() =>
-                {
+                if (inputResult.ActionType == EPlayerInputType.TurnEnd)
                     EndTurn();
-                });
+                else
+                    EnemyPhase(GameCallbackChain);
             });
         });
     }

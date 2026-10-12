@@ -1,8 +1,10 @@
 ﻿public class DeffendTile : Tile
 {
-    public DeffendTile(EElementType elementType) : base(ETileType.Deffend, elementType)
+    public DeffendTile(EElementType elementType) : base(elementType)
     {
     }
+
+    public override ETileType TileType => ETileType.Deffend;
 
     public override void TileAction(TileActionContext actionContext)
     {
