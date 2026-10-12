@@ -1,6 +1,6 @@
 ﻿public class AttackTile : Tile
 {
-    public AttackTile(EElementType elementType) : base(elementType)
+    public AttackTile(EElementType elementType) : base(ETileType.Attack, elementType)
     {
     }
 
