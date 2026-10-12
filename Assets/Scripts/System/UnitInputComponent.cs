@@ -30,6 +30,7 @@ public class UnitInputComponent
     private void OnInput(PlayerInputEvent inputEvent)
     {
         inputCallback?.Invoke(inputEvent.ActionType, inputEvent.DiceIndex);
-        Disable();
+        if (inputEvent.ActionType == EPlayerInputType.TurnEnd)
+            Disable();
     }
 }

@@ -17,12 +17,11 @@ public enum ETileType
 public abstract class Tile
 {
     public EElementType ElementType;
-    public ETileType TileType;
+    public abstract ETileType TileType { get; }
     public int TileLevel;
 
-    public Tile(ETileType tileType, EElementType elementType)
+    public Tile(EElementType elementType)
     {
-        TileType = tileType;
         ElementType = elementType;
         TileLevel = 1;
     }
