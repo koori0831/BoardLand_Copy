@@ -4,6 +4,8 @@
     {
     }
 
+    public override ETileType TileType => ETileType.Attack;
+
     public override void TileAction(TileActionContext actionContext)
     {
         actionContext.Enemy.TakeAttack(actionContext.Dice.DiceNumber);

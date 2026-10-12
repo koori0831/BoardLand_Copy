@@ -7,6 +7,9 @@ public class UnitStatusComponent
     private int currentAttackDamage;
     private int currentDeffendPoint;
 
+    public event Action<int, int> HealthChanged;
+    public event Action<int> DeffendPointChanged;
+
     public void Initialize(UnitStatus status)
     {
         this.status = status;
@@ -19,6 +22,7 @@ public class UnitStatusComponent
     {
         currentHealth += value;
         currentHealth = Math.Clamp(currentHealth, 0, status.MaxHealth);
+        HealthChanged?.Invoke(currentHealth, status.MaxHealth);
     }
     public int GetCurrentHealth()
     {
@@ -31,7 +35,7 @@ public class UnitStatusComponent
     public void ModifyAttackDamage(int value)
     {
         currentAttackDamage += value;
-        currentAttackDamage = Math.Min(currentAttackDamage, 0);
+        currentAttackDamage = Math.Max(currentAttackDamage, 0);
     }
     public int GetCurrentAttackDamage()
     {
@@ -41,6 +45,7 @@ public class UnitStatusComponent
     {
         currentDeffendPoint += value;
         currentDeffendPoint = Math.Clamp(currentDeffendPoint, 0, status.MaxDeffendPoint);
+        DeffendPointChanged?.Invoke(currentDeffendPoint);
     }
     public int GetCurrentDeffendPoint()
     {

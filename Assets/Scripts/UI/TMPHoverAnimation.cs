@@ -27,6 +27,11 @@ public class TMPHoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         if (lastCharCount >= tmp.textInfo.characterCount)
             lastCharCount = 0;
+        if (tmp.text[lastCharCount] == '\n' || tmp.text[lastCharCount] == ' ')
+        {
+            PlayAnimation();
+            return;
+        }
 
         currentMotion = LMotion.Create(Vector3.zero, Vector3.up * 5f, 0.1f)
             .WithLoops(2, LoopType.Yoyo)

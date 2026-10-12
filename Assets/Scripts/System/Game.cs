@@ -12,6 +12,13 @@ public class Game
     private Dictionary<EPlayerInputType, Action<Dice>> playerInputActionDictionary = null;
     private static readonly int diceInventorySize = 5;
 
+    public Player Player => playerUnit;
+    public Enemy Enemy => enemyUnit;
+    public int PlayerPosition => playerPosition;
+
+    public event Action<int, int> PlayerMoved;
+    public event Action<List<Dice>> DiceRolled;
+
     public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
     {
         playerUnit = new Player(playerData.Status);
@@ -31,14 +38,19 @@ public class Game
         this.turnEndCallBack = turnEndCallBack;
 
         RollDice();
+        GameCallbackChain();
+    }
+
+    private void GameCallbackChain()
+    {
         playerUnit.InputReady(inputResult =>
         {
             OnPlayerInput(inputResult, () =>
             {
-                EnemyPhase(() =>
-                {
+                if (inputResult.ActionType == EPlayerInputType.TurnEnd)
                     EndTurn();
-                });
+                else
+                    EnemyPhase(GameCallbackChain);
             });
         });
     }
@@ -47,6 +59,7 @@ public class Game
     {
         playerUnit.Dispose();
         turnEndCallBack = null;
+        PlayerMoved = null;
     }
 
     private void OnPlayerInput(PlayerInputResult inputResult, Action moveNext)
@@ -74,11 +87,14 @@ public class Game
             diceList.Add(new Dice(diceNumber, elementType));
         }
         playerUnit.DiceInventorySetting(diceList);
+        DiceRolled.Invoke(diceList);
     }
 
     private void PlayerMove(Dice dice)
     {
+        int from = playerPosition;
         playerPosition = (playerPosition + dice.DiceNumber) % tiles.TileList.Count;
+        PlayerMoved?.Invoke(from, dice.DiceNumber);
         LogManager.Log($"플레이어 {dice.DiceNumber}만큼 이동. 현재 타일 타입: {tiles.TileList[playerPosition].GetType()}", ELogType.Test, ELogCategory.GameSystem);
     }
     private void PlayerTileAction(Dice dice)

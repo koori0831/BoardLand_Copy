@@ -17,6 +17,7 @@ public enum ETileType
 public abstract class Tile
 {
     public EElementType ElementType;
+    public abstract ETileType TileType { get; }
     public int TileLevel;
 
     public Tile(EElementType elementType)
