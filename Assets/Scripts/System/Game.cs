@@ -17,6 +17,7 @@ public class Game
     public int PlayerPosition => playerPosition;
 
     public event Action<int, int> PlayerMoved;
+    public event Action<List<Dice>> DiceRolled;
 
     public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
     {
@@ -81,6 +82,7 @@ public class Game
             diceList.Add(new Dice(diceNumber, elementType));
         }
         playerUnit.DiceInventorySetting(diceList);
+        DiceRolled.Invoke(diceList);
     }
 
     private void PlayerMove(Dice dice)

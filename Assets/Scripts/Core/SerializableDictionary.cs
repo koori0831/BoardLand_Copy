@@ -14,8 +14,6 @@ public struct SerializableDictionaryItem<TKey, TValue>
     }
 }
 
-// 인스펙터에서는 serializableItems 리스트로 편집하고,
-// 역직렬화 시점에 리스트 내용을 Dictionary로 옮겨 담는다.
 [Serializable]
 public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 {
@@ -24,7 +22,6 @@ public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, IS
 
     public void OnBeforeSerialize()
     {
-        // 리스트가 원본 데이터. 인스펙터 편집 중 중복 키가 사라지지 않도록 여기서는 덮어쓰지 않는다.
     }
 
     public void OnAfterDeserialize()

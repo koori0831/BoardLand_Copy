@@ -14,7 +14,7 @@ public class TestGameManagerMono : MonoBehaviour
     private BoardRenderer boardRenderer;
 
     [SerializeField]
-    private int diceIndex;
+    private DiceDeckUI diceUI;
 
     private Board board;
 
@@ -33,22 +33,9 @@ public class TestGameManagerMono : MonoBehaviour
         board = new Board(playerDataSO.PlayerData, enemyDataSO.EnemyData);
         if (boardRenderer != null)
             boardRenderer.Bind(board);
+        if (diceUI != null)
+            diceUI.Bind(board.Games);
         board.StartGame();
-    }
-
-    [LabelText("이동하기")]
-    [Button]
-    private void PlayerInputMove() => PublishInput(EPlayerInputType.Move, diceIndex);
-    [LabelText("행동하기")]
-    [Button]
-    private void PlayerInputAttack() => PublishInput(EPlayerInputType.Action, diceIndex);
-    [LabelText("턴 종료하기")]
-    [Button]
-    private void PlayerInputTurnEnd() => PublishInput(EPlayerInputType.TurnEnd, 0);
-
-    private void PublishInput(EPlayerInputType actionType, int diceIndex)
-    {
-        EventBus<PlayerInputEvent>.Publish(new PlayerInputEvent(actionType, diceIndex));
     }
 
     private void OnDestroy()
