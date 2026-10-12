@@ -19,11 +19,14 @@ public class Game
     public event Action<int, int> PlayerMoved;
     public event Action<List<Dice>> DiceRolled;
 
-    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
+    private Action<Skill> skillAction;
+
+    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, Action<Skill> skillAction)
     {
         playerUnit = new Player(playerData.Status);
         enemyUnit = new Enemy(enemyData.Status);
         this.tiles = tiles;
+        this.skillAction = skillAction;
 
         playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
         {
@@ -75,6 +78,11 @@ public class Game
         }
 
         moveNext?.Invoke();
+    }
+
+    private void UseSkill(Skill skill)
+    {
+        skillAction?.Invoke(skill);
     }
 
     private void RollDice()

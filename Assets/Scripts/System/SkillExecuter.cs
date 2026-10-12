@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-public class WeaponSkillExecuterTemplate
+public class SkillExecuter
 {
     // 어디까지 실행했는지 기록
     private int currentSkillEffectIndex = 0;
     // 스킬 효과 목록 스냅샷 캐싱
     private List<SkillEffectBase> effects;
 
-    private void ExecuteSkill(Skill skill, SkillContext context)
+    public void ExecuteSkill(Skill skill, SkillContext context)
     {
         // 우선 이 스킬이 실행 가능한지 확인
         foreach (ISkillCondition condition in skill.skillConditions)
@@ -25,6 +23,7 @@ public class WeaponSkillExecuterTemplate
         // 스킬 효과 목록을 캐싱하고 실행
         effects = skill.skillEffects;
         ExecuteSkillEffect(context);
+        return;
     }
 
     private void ExecuteSkillEffect(SkillContext context)
