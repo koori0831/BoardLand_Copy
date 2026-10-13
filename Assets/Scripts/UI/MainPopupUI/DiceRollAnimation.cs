@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,26 +9,22 @@ public class DiceRollAnimation : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SerializableDictionary<EElementType, SpriteList> diceImages;
     [SerializeField] private SerializableDictionary<EElementType, string> diceAnimations; // stateName
-    [SerializeField] private float defaultRollTime = 2.0f;
+    [SerializeField] private float defaultRollTime = 1.0f;
 
     public async UniTask StartAnimation(EElementType elementType, int diceNumber, int diceIndex)
     {
-        await PlayUntilTimeAsync(diceAnimations[elementType], (defaultRollTime + diceIndex) / 2);
+        await PlayForSecondsAsync(diceAnimations[elementType], (defaultRollTime + diceIndex) / 2f);
         image.sprite = diceImages[elementType].sprites[diceNumber - 1];
     }
 
-    public async UniTask PlayUntilTimeAsync(string stateName, float targetSeconds)
+    private async UniTask PlayForSecondsAsync(string stateName, float seconds)
     {
-        animator.Play(stateName);
+        animator.enabled = true;
+        animator.speed = 1f;
+        animator.Play(stateName, 0, 0f);
 
-        await UniTask.DelayFrame(1);
+        await UniTask.Delay(TimeSpan.FromSeconds(seconds));
 
-        float elapsedTime = 0f;
-        while (elapsedTime < targetSeconds)
-        {
-            elapsedTime += Time.deltaTime;
-        }
-
-        animator.speed = 0f;
+        animator.enabled = false;
     }
 }
