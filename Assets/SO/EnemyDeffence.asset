@@ -42,6 +42,6 @@ MonoBehaviour:
     - rid: 8685653955794960611
       type: {class: HPPercentageCheck, ns: , asm: Assembly-CSharp}
       data:
-        HigherPercentage: 20
+        HigherPercentage: 0
         LowerPercentage: 50
         SkillTarget: 0
