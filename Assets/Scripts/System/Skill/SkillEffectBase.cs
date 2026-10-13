@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 public interface ISkillCondition
 {
@@ -7,14 +6,13 @@ public interface ISkillCondition
 }
 public class SkillContext
 {
-    public List<Game> Games;
+    public Game Game;
     public Tiles Tiles;
-    public int CurrentGameIndex;
-    public SkillContext(List<Game> games, Tiles tiles, int currentGameIndex)
+    public int LastSkillIndex = -1;
+    public SkillContext(Game game, Tiles tiles)
     {
-        Games = games;
+        Game = game;
         Tiles = tiles;
-        CurrentGameIndex = currentGameIndex;
     }
 }
 [Serializable]

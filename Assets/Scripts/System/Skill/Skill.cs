@@ -17,4 +17,16 @@ public class Skill
         this.skillConditions = skillConditions;
         this.skillEffects = skillEffects;
     }
+
+    public bool CanUse(SkillContext context)
+    {
+        if (skillConditions == null || skillConditions.Count < 0)
+            return true;
+        foreach (ISkillCondition condition in skillConditions)
+        {
+            if (condition.IsConditionMet(context) == false)
+                return false;
+        }
+        return true;
+    }
 }

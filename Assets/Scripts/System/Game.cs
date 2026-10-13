@@ -19,14 +19,11 @@ public class Game
     public event Action<int, int> PlayerMoved;
     public event Action<List<Dice>> DiceRolled;
 
-    private Action<Skill> skillAction;
-
-    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, Action<Skill> skillAction)
+    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
     {
         playerUnit = new Player(playerData.Status);
         enemyUnit = new Enemy(enemyData.Status);
         this.tiles = tiles;
-        this.skillAction = skillAction;
 
         playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
         {
@@ -80,11 +77,6 @@ public class Game
         moveNext?.Invoke();
     }
 
-    private void UseSkill(Skill skill)
-    {
-        skillAction?.Invoke(skill);
-    }
-
     private void RollDice()
     {
         List<Dice> diceList = new List<Dice>();
@@ -117,7 +109,8 @@ public class Game
     private void EnemyPhase(Action moveNext)
     {
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
-        playerUnit.TakeAttack(enemyUnit.Status.GetCurrentAttackDamage());
+        SkillContext context = new(this, tiles);
+        SkillExecuter.ExecuteSkill(enemyUnit.GetNextSkill(context), context);
         moveNext?.Invoke();
     }
 

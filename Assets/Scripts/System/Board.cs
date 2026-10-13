@@ -19,24 +19,15 @@ public class Board
     public Tiles Tiles { get; private set; }
     private int currentGameIndex;
 
-    private SkillExecuter skillExecuter;
-
     public int CurrentGameIndex => currentGameIndex;
     public event Action<int> CurrentGameChanged;
 
     public Board(PlayerData playerData, EnemyData enemyData)
     {
-        skillExecuter = new SkillExecuter();
         Tiles = new Tiles(boardSize);
 
         for (int i = 0; i < playerCount; i++)
-            Games.Add(new Game(playerData, enemyData, Tiles, RequestSkillExecute));
-    }
-
-    private void RequestSkillExecute(Skill skill)
-    {
-        SkillContext context = new SkillContext(Games, Tiles, currentGameIndex);
-        skillExecuter.ExecuteSkill(skill, context);
+            Games.Add(new Game(playerData, enemyData, Tiles));
     }
 
     public void StartGame()
