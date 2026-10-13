@@ -13,7 +13,7 @@ public class EnemyDataSO : ScriptableObject
     {
         List<Skill> skillList = new();
         foreach (SkillSO skillSO in Skills)
-            skillList.Add(new Skill(skillSO.skillName, skillSO.skillDescription, skillSO.skillIcon, skillSO.skillConditions, skillSO.skillEffects));
+            skillList.Add(new Skill(skillSO.skillConditions, skillSO.skillEffects));
 
         return new EnemyData(EnemyName, EnemyDescription, skillList, Status);
     }

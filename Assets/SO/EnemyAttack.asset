@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1383a829f9da0a4ba8976db852eebff, type: 3}
-  m_Name: GeneralAttack
+  m_Name: EnemyAttack
   m_EditorClassIdentifier: Assembly-CSharp::SkillSO
   skillName: 
   skillDescription: 
   skillIcon: {fileID: 0}
   skillConditions: []
-  skillEffects: []
+  skillEffects:
+  - rid: 8685653955794960621
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8685653955794960621
+      type: {class: DefaultAttackSkill, ns: , asm: Assembly-CSharp}
+      data:
+        Damage: 2
+        SkillTarget: 0

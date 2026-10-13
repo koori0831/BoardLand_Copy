@@ -3,19 +3,18 @@ using UnityEngine;
 
 public class Skill
 {
-    public string skillName;
-    public string skillDescription;
-    public Sprite skillIcon;
     public List<ISkillCondition> skillConditions;
     public List<SkillEffectBase> skillEffects;
 
-    public Skill(string skillName, string skillDescription, Sprite skillIcon, List<ISkillCondition> skillConditions, List<SkillEffectBase> skillEffects)
+    public Skill(List<ISkillCondition> skillConditions, List<SkillEffectBase> skillEffects)
     {
-        this.skillName = skillName;
-        this.skillDescription = skillDescription;
-        this.skillIcon = skillIcon;
         this.skillConditions = skillConditions;
         this.skillEffects = skillEffects;
+    }
+    public Skill(Skill skill)
+    {
+        skillConditions = new List<ISkillCondition>(skill.skillConditions);
+        skillEffects = new List<SkillEffectBase>(skill.skillEffects);
     }
 
     public bool CanUse(SkillContext context)

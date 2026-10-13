@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb3fb6e61b8b054984520c52490d664, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDataSO
-  EnemyData:
-    EnemyName: 
-    EnemyDescription: 
-    Status:
-      MaxHealth: 10
-      MaxDeffendPoint: 5
-      AttackDamage: 1
+  EnemyName: 
+  EnemyDescription: 
+  Skills:
+  - {fileID: 11400000, guid: 49210fafa6aeba64796fb8bd998d75e0, type: 2}
+  - {fileID: 11400000, guid: e9c19eb2aec2eda4fa0b83cc0ade3334, type: 2}
+  - {fileID: 11400000, guid: b7bb0e9f8e759074e9ce47a3d084d852, type: 2}
+  Status:
+    MaxHealth: 30
+    MaxDeffendPoint: 4

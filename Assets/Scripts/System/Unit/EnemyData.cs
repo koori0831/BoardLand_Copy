@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public struct EnemyData
+public class EnemyData
 {
     public string EnemyName;
     public string EnemyDescription;

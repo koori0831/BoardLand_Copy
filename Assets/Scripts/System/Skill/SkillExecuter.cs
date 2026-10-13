@@ -5,7 +5,7 @@ public static class SkillExecuter
     // 어디까지 실행했는지 기록
     private static int currentSkillEffectIndex = 0;
     // 스킬 효과 목록 스냅샷 캐싱
-    private static List<SkillEffectBase> effects;
+    private static List<SkillEffectBase> effects = new();
 
     public static void ExecuteSkill(Skill skill, SkillContext context)
     {
@@ -29,8 +29,7 @@ public static class SkillExecuter
         if (currentSkillEffectIndex < effects.Count)
         {
             // 스킬 실행이 끝나면 다음 스킬 효과를 실행하도록 콜백을 전달
-            effects[currentSkillEffectIndex].ApplyEffect(context, () => ExecuteSkillEffect(context));
-            currentSkillEffectIndex++;
+            effects[currentSkillEffectIndex++].ApplyEffect(context, () => ExecuteSkillEffect(context));
         }
         else
         {

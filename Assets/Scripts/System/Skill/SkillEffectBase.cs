@@ -4,17 +4,7 @@ public interface ISkillCondition
 {
     bool IsConditionMet(SkillContext context);
 }
-public class SkillContext
-{
-    public Game Game;
-    public Tiles Tiles;
-    public int LastSkillIndex = -1;
-    public SkillContext(Game game, Tiles tiles)
-    {
-        Game = game;
-        Tiles = tiles;
-    }
-}
+
 [Serializable]
 public abstract class SkillEffectBase
 {
