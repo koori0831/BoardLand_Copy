@@ -6,6 +6,7 @@
             ETileType.Attack => new AttackTile(elementType),
             ETileType.Deffend => new DeffendTile(elementType),
             ETileType.Heal => new HealTile(elementType),
+            ETileType.TreasureBox => new TreasureBoxTile(elementType),
             _ => null
         };
     }

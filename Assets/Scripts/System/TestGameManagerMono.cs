@@ -22,15 +22,9 @@ public class TestGameManagerMono : MonoBehaviour
     [Button]
     private void StartGame()
     {
-        //Enemy enemy = new Enemy(enemyDataSO.bossName, enemyDataSO.bossDescription, enemyDataSO.GetSkillList());
-        //Enemy otherEnemy = new Enemy(enemyDataSO.bossName, enemyDataSO.bossDescription, enemyDataSO.GetSkillList());
-        //Player player = new Player();
-        //Player otherPlayer = new Player();
-        //Game user = new Game(player, enemy);
-        //Game otherUser = new Game(otherPlayer, otherEnemy);
         LogManager.Log($"게임 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
         board?.Dispose();
-        board = new Board(playerDataSO.PlayerData, enemyDataSO.EnemyData);
+        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData());
         if (boardRenderer != null)
             boardRenderer.Bind(board);
         if (diceUI != null)

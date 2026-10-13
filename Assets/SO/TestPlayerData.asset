@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UserDataSO
   PlayerData:
     Status:
-      MaxHealth: 10
+      MaxHealth: 15
       MaxDeffendPoint: 5
-      AttackDamage: 1

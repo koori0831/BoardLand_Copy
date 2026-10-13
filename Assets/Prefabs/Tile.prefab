@@ -112,6 +112,8 @@ MonoBehaviour:
       value: {fileID: 21300000, guid: eb3769d9d65c85548b0a4cbc44a430fc, type: 3}
     - key: 2
       value: {fileID: 21300000, guid: 2a1bb8dec7cf98449827a21c3aa68c40, type: 3}
+    - key: 3
+      value: {fileID: 21300000, guid: 99d2a9be70675ca4ea232df232690be5, type: 3}
   materialDictionary:
     serializableItems:
     - key: 0
