@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerRenderer : UnitRenderer
 {
     [SerializeField] private float stepDuration = 0.2f;
+    [SerializeField] private GameObject selectIcon;
 
     private MotionHandle moveMotion;
     private List<Vector3> path = new();
@@ -15,6 +16,11 @@ public class PlayerRenderer : UnitRenderer
     {
         StopMove();
         transform.position = position;
+    }
+
+    public void SetFocus(bool isFocused)
+    {
+        selectIcon.SetActive(isFocused); 
     }
 
     // path에 담긴 위치들을 순서대로 한 칸씩 방문한다.
