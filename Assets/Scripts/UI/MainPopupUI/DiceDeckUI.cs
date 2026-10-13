@@ -1,4 +1,5 @@
 using Core;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,6 +7,7 @@ using UnityEngine.InputSystem;
 public class DiceDeckUI : MonoBehaviour
 {
     [SerializeField] private DiceUI diceUIPrefab;
+    [SerializeField] private DiceRollPopupUI diceRollPopupUI;
     [SerializeField] private List<RectTransform> actionArea;
     [SerializeField] private List<RectTransform> cancelArea;
     [SerializeField] private Camera uiCamera;
@@ -53,6 +55,14 @@ public class DiceDeckUI : MonoBehaviour
             Destroy(diceUI.gameObject);
         diceUIList.Clear();
 
+        SpawnDiceUIAfterAnimation(dices).Forget();
+    }
+
+    private async UniTaskVoid SpawnDiceUIAfterAnimation(List<Dice> dices)
+    {
+        diceRollPopupUI.gameObject.SetActive(true);
+        await diceRollPopupUI.DrawAnimations(dices);
+        await UniTask.WaitUntil(() => diceRollPopupUI.gameObject.activeSelf == false);
         for (int i = 0; i < dices.Count; i++)
         {
             int index = i;

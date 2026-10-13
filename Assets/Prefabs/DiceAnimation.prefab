@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6553826666674696047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7804657665497063224}
+  - component: {fileID: 376498485435140991}
+  - component: {fileID: 2575366295472346064}
+  - component: {fileID: 8209922634914165266}
+  - component: {fileID: 2332047084598568383}
+  m_Layer: 5
+  m_Name: DiceAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7804657665497063224
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553826666674696047}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &376498485435140991
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553826666674696047}
+  m_CullTransparentMesh: 1
+--- !u!114 &2575366295472346064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553826666674696047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c4e77efdba08dda409aa272296efa9e3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!95 &8209922634914165266
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553826666674696047}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3440772dba826104ea2c577ef725f359, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2332047084598568383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553826666674696047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc688b75549c774f80e6ace94c75334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DiceRollAnimation
+  image: {fileID: 2575366295472346064}
+  animator: {fileID: 8209922634914165266}
+  diceImages:
+    serializableItems:
+    - key: 0
+      value:
+        sprites:
+        - {fileID: 21300000, guid: 7b20143a2b0d5ec4db64d5e559e89d7b, type: 3}
+        - {fileID: 21300000, guid: 1e7e2610ec84ff74c8931e091a9d6774, type: 3}
+        - {fileID: 21300000, guid: 85dcb1441b86d824983411d039f0676e, type: 3}
+        - {fileID: 21300000, guid: eada56adcfcc5bf4fa7cc823cbe2a3ce, type: 3}
+        - {fileID: 21300000, guid: fba6fe3bdd37b9a439f098c23884f362, type: 3}
+        - {fileID: 21300000, guid: f78396dc4aca70f449fed3323b41fbf6, type: 3}
+    - key: 1
+      value:
+        sprites:
+        - {fileID: 21300000, guid: 18dd475b808000d43b8df089e47dd79c, type: 3}
+        - {fileID: 21300000, guid: 83680c9a4c5b757408bfa1817190f182, type: 3}
+        - {fileID: 21300000, guid: b4919b9509aeeec4e9a6d6636a5c40ba, type: 3}
+        - {fileID: 21300000, guid: fee499a27edd1584a8d10e7495f4e5a4, type: 3}
+        - {fileID: 21300000, guid: c5a2babf47153054380a63fa89e1bee3, type: 3}
+        - {fileID: 21300000, guid: acc7fa0325ae07e4e959dded8b895b4c, type: 3}
+    - key: 2
+      value:
+        sprites:
+        - {fileID: 21300000, guid: 16429d825e14ec647b2ff19f69261302, type: 3}
+        - {fileID: 21300000, guid: 892182ef23c453441bd41ad2f884828d, type: 3}
+        - {fileID: 21300000, guid: c4e77efdba08dda409aa272296efa9e3, type: 3}
+        - {fileID: 21300000, guid: 2040d68d74ea58442a1c950f65a3d53c, type: 3}
+        - {fileID: 21300000, guid: d9d6a8d8ce2fabd4cbce653ae5933738, type: 3}
+        - {fileID: 21300000, guid: 3eb9ec7c8917f46488f1f6ae8d28a8de, type: 3}
+    - key: 3
+      value:
+        sprites:
+        - {fileID: 21300000, guid: 7a1e917ba1fd1824aa55a6da7f52b9f1, type: 3}
+        - {fileID: 21300000, guid: 6348df4983e630b43a7c70520ebbbd35, type: 3}
+        - {fileID: 21300000, guid: 5c2dfca847bf6c346be618e6b7b44d1e, type: 3}
+        - {fileID: 21300000, guid: 08f26f6d8efe4bf4d8376e2bf8048524, type: 3}
+        - {fileID: 21300000, guid: f6d348e269a56db4fab1d98f2fafec25, type: 3}
+        - {fileID: 21300000, guid: ad5d412b453ca92458c6d70dae51b538, type: 3}
+  diceAnimations:
+    serializableItems:
+    - key: 0
+      value: RollAnimation(None)
+    - key: 1
+      value: RollAnimation(Earth)
+    - key: 2
+      value: RollAnimation(Water)
+    - key: 3
+      value: RollAnimation(Fire)
+  defaultRollTime: 2
