@@ -4,7 +4,6 @@ public class UnitStatusComponent
 {
     private UnitStatus status;
     private int currentHealth;
-    private int currentAttackDamage;
     private int currentDeffendPoint;
 
     public event Action<int, int> HealthChanged;
@@ -14,7 +13,6 @@ public class UnitStatusComponent
     {
         this.status = status;
         currentHealth = status.MaxHealth;
-        currentAttackDamage = status.AttackDamage;
         currentDeffendPoint = 0;
     }
 
@@ -31,15 +29,6 @@ public class UnitStatusComponent
     public int GetMaxHealth()
     {
         return status.MaxHealth;
-    }
-    public void ModifyAttackDamage(int value)
-    {
-        currentAttackDamage += value;
-        currentAttackDamage = Math.Max(currentAttackDamage, 0);
-    }
-    public int GetCurrentAttackDamage()
-    {
-        return currentAttackDamage;
     }
     public void ModifyDeffendPoint(int value)
     {
