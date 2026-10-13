@@ -25,4 +25,4 @@ MonoBehaviour:
       type: {class: DefaultAttackSkill, ns: , asm: Assembly-CSharp}
       data:
         Damage: 2
-        SkillTarget: 0
+        SkillTarget: 1
