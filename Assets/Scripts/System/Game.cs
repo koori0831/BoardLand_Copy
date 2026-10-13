@@ -22,7 +22,7 @@ public class Game
     public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
     {
         playerUnit = new Player(playerData.Status);
-        enemyUnit = new Enemy(enemyData.Status);
+        enemyUnit = new Enemy(enemyData.Status, enemyData.Skills);
         this.tiles = tiles;
 
         playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
@@ -109,7 +109,9 @@ public class Game
     private void EnemyPhase(Action moveNext)
     {
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
-        playerUnit.TakeAttack(enemyUnit.Status.GetCurrentAttackDamage());
+        SkillContext context = new(enemyUnit, playerUnit, tiles);
+        SkillExecuter.ExecuteSkill(enemyUnit.GetNextSkill(context), context);
+        LogManager.Log($"");
         moveNext?.Invoke();
     }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 
-public struct SkillContext
+public interface ISkillCondition
 {
+    bool IsConditionMet(SkillContext context);
 }
+
 [Serializable]
 public abstract class SkillEffectBase
 {
