@@ -27,6 +27,7 @@ public class GameRenderer : MonoBehaviour
     public void SetFocused(bool isFocused)
     {
         enemyRenderer.gameObject.SetActive(isFocused);
+        playerRenderer.SetFocus(isFocused);
     }
 
     private void OnDestroy()
