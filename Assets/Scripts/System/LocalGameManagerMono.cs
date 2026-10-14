@@ -18,6 +18,9 @@ public class LocalGameManagerMono : MonoBehaviour
     private DiceDeckUI diceUI;
 
     [SerializeField]
+    private TileInfoUI tileInfoUI;
+
+    [SerializeField]
     private SerializableDictionary<EElementType, TileLevelTableSO> tileLevelTables;
 
     private Board board;
@@ -34,6 +37,8 @@ public class LocalGameManagerMono : MonoBehaviour
         if (diceUI != null)
             diceUI.Bind(board.Games);
         board.StartGame();
+        if (tileInfoUI != null)
+            tileInfoUI.Bind(board);
     }
 
     private Dictionary<EElementType, TileLevelData> CreateTileLevelDataDictionary()

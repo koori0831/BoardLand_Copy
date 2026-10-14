@@ -401,7 +401,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 115, y: -15}
-  m_SizeDelta: {x: 0, y: 20.07}
+  m_SizeDelta: {x: 42.01, y: 20.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &138571554
 MonoBehaviour:
@@ -814,9 +814,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0.7
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3958,6 +3958,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1481479339}
+  - component: {fileID: 1481479340}
   m_Layer: 5
   m_Name: CurrentTile
   m_TagString: Untagged
@@ -3986,6 +3987,43 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -323}
   m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1481479340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481479338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e4dc685631d0d4bb4bc58e0d996439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TileInfoUI
+  elementColor:
+    serializableItems:
+    - key: 0
+      value: {r: 0.7137255, g: 0.68235296, b: 0.627451, a: 1}
+    - key: 1
+      value: {r: 0.5803922, g: 0.40000004, b: 0.40000004, a: 1}
+    - key: 2
+      value: {r: 0.3254902, g: 0.5137255, b: 1, a: 1}
+    - key: 3
+      value: {r: 0.8078432, g: 0.32156864, b: 0.3647059, a: 1}
+  tileTypeIcon:
+    serializableItems:
+    - key: 0
+      value: {fileID: 21300000, guid: 18d278f3a25358b4f8ca349fb3223e03, type: 3}
+    - key: 1
+      value: {fileID: 21300000, guid: eb3769d9d65c85548b0a4cbc44a430fc, type: 3}
+    - key: 2
+      value: {fileID: 21300000, guid: 2a1bb8dec7cf98449827a21c3aa68c40, type: 3}
+    - key: 3
+      value: {fileID: 21300000, guid: 99d2a9be70675ca4ea232df232690be5, type: 3}
+  elementTypeImage: {fileID: 1754055204}
+  sliderFillImage: {fileID: 1488913031}
+  icon: {fileID: 2130976278}
+  expSlider: {fileID: 248192118}
+  levelText: {fileID: 1717113787}
 --- !u!1 &1488913029
 GameObject:
   m_ObjectHideFlags: 0
@@ -5256,6 +5294,7 @@ MonoBehaviour:
   enemyDataSO: {fileID: 11400000, guid: c393662804a72df4fac1635ea9cec719, type: 2}
   boardRenderer: {fileID: 2012971467}
   diceUI: {fileID: 1194717699}
+  tileInfoUI: {fileID: 1481479340}
   tileLevelTables:
     serializableItems:
     - key: 0

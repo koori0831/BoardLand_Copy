@@ -10,10 +10,14 @@ public class TileStatus
     public event Action<int, bool> LevelChanged; // 레벨, isMaxLevel
     public event Action<float> EXPChanged; // 현재 EXP 진행도%
 
+    public bool IsMaxLevel => CurrentLevel == LevelData.LevelSteps.Count;
+    public float Percentage { get; private set; } = 0;
+
     public TileStatus(EElementType elementType, TileLevelData levelData)
     {
         ElementType = elementType;
         LevelData = levelData;
+        RefreshLevel();
     }
 
     public void AddEXP(int amount)
@@ -21,17 +25,16 @@ public class TileStatus
         CurrentEXP += amount;
         CurrentEXP = Math.Clamp(CurrentEXP, 0, LevelData.LevelSteps[^1].RequiredEXP);
         RefreshLevel();
-        float percentage = 0f;
-        if (CurrentLevel == LevelData.LevelSteps.Count) // 레벨이 맥스인 경우
-            percentage = 100f;
+        if (IsMaxLevel) // 레벨이 맥스인 경우
+            Percentage = 100f;
         else
         {
             float current = CurrentEXP - LevelData.LevelSteps[CurrentLevel - 1].RequiredEXP;
             float next = LevelData.LevelSteps[CurrentLevel].RequiredEXP - LevelData.LevelSteps[CurrentLevel - 1].RequiredEXP;
-            percentage = (current / next) * 100f;
+            Percentage = (current / next) * 100f;
         }
 
-        EXPChanged?.Invoke(percentage);
+        EXPChanged?.Invoke(Percentage);
     }
 
     public Skill GetTileSkill()
@@ -48,7 +51,6 @@ public class TileStatus
             if (CurrentEXP >= levelStep.RequiredEXP)
                 CurrentLevel++;
         }
-        bool isMaxLevel = CurrentLevel == LevelData.LevelSteps.Count;
-        LevelChanged?.Invoke(CurrentLevel, isMaxLevel);
+        LevelChanged?.Invoke(CurrentLevel, IsMaxLevel);
     }
 }
