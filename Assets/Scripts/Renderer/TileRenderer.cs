@@ -11,7 +11,7 @@ public class TileRenderer : MonoBehaviour
 
     public void Bind(Tile tile)
     {
-        TileSetting(tile.TileType, tile.ElementType);
+        TileSetting(tile.TileType, tile.Status.ElementType);
     }
 
     private void TileSetting(ETileType tileType, EElementType elementType)

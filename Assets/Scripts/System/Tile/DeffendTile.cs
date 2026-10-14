@@ -1,6 +1,6 @@
 ﻿public class DeffendTile : Tile
 {
-    public DeffendTile(EElementType elementType) : base(elementType)
+    public DeffendTile(EElementType elementType, TileLevelData levelData) : base(elementType, levelData)
     {
     }
 

@@ -15,9 +15,9 @@ MonoBehaviour:
   TileLevelDataList:
   - RequiredEXP: 0
     Skill: {fileID: 0}
-  - RequiredEXP: 3
-    Skill: {fileID: 0}
   - RequiredEXP: 6
     Skill: {fileID: 0}
-  - RequiredEXP: 9
+  - RequiredEXP: 12
+    Skill: {fileID: 0}
+  - RequiredEXP: 18
     Skill: {fileID: 0}

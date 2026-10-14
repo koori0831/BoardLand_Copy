@@ -16,14 +16,12 @@ public enum ETileType
 
 public abstract class Tile
 {
-    public EElementType ElementType;
+    public TileStatus Status;
     public abstract ETileType TileType { get; }
-    public int TileLevel;
 
-    public Tile(EElementType elementType)
+    public Tile(EElementType elementType, TileLevelData levelData)
     {
-        ElementType = elementType;
-        TileLevel = 1;
+        Status = new TileStatus(elementType, levelData);
     }
 
     public abstract void TileAction(TileActionContext actionContext);

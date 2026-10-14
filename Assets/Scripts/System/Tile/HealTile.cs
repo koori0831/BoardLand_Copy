@@ -1,6 +1,6 @@
 ﻿public class HealTile : Tile
 {
-    public HealTile(EElementType elementType) : base(elementType)
+    public HealTile(EElementType elementType, TileLevelData levelData) : base(elementType, levelData)
     {
     }
 

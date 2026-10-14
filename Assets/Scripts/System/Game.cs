@@ -101,6 +101,12 @@ public class Game
     {
         TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice);
         tiles.TileList[playerPosition].TileAction(actionContext);
+
+        if (tiles.TileList[playerPosition].Status.ElementType == dice.ElementType)
+            tiles.TileList[playerPosition].Status.AddEXP(dice.DiceNumber);
+        Skill tileSkill = tiles.TileList[playerPosition].Status.GetTileSkill();
+        if (tileSkill != null)
+            new SkillExecutor(tileSkill, new SkillContext(playerUnit, enemyUnit, tiles));
     }
     private void PlayerTurnEnd(Dice dice)
     {

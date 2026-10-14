@@ -2,11 +2,11 @@
 
 public class TreasureBoxTile : Tile
 {
-    public override ETileType TileType => ETileType.TreasureBox;
-    public TreasureBoxTile(EElementType elementType) : base(elementType)
+    public TreasureBoxTile(EElementType elementType, TileLevelData levelData) : base(elementType, levelData)
     {
     }
 
+    public override ETileType TileType => ETileType.TreasureBox;
     public override void TileAction(TileActionContext actionContext)
     {
         // 성공한 경우

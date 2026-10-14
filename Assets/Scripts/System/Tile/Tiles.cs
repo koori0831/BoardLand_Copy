@@ -12,7 +12,7 @@ public class Tiles
         {
             ETileType tileType = new RandomEnumValue<ETileType>().RandomEnum;
             EElementType elementType = new RandomEnumValue<EElementType>().RandomEnum;
-            TileList.Add(TileFactory.Create(tileType, elementType));
+            TileList.Add(TileFactory.Create(tileType, elementType, tileLevelDatas[elementType]));
         }
     }
 }
