@@ -13,7 +13,6 @@ public enum EPlayerInputType
 public class Board
 {
     private static readonly int boardSize = 12;
-    private static readonly int playerCount = 2;
 
     public List<Game> Games { get; private set; } = new();
     public Tiles Tiles { get; private set; }
@@ -21,13 +20,15 @@ public class Board
 
     private List<int> defeatGameList = new(); // 적에게 진 게임 리스트
     private List<int> winGameList = new(); // 적에게 이긴 게임 리스트
-    private List<int> readerBoard = new(); 
+    private List<int> readerBoard = new();
+    private bool isAllGameEnd = false;
 
     public int CurrentGameIndex => currentGameIndex;
+    public List<int> ReaderBoard => readerBoard;
     public event Action<int> CurrentGameChanged;
     public event Action AllGameEnd;
 
-    public Board(PlayerData playerData, EnemyData enemyData, Dictionary<EElementType, TileLevelData> tileLevelDatas)
+    public Board(PlayerData playerData, EnemyData enemyData, Dictionary<EElementType, TileLevelData> tileLevelDatas, int playerCount)
     {
         Tiles = new Tiles(boardSize, tileLevelDatas);
 
@@ -40,6 +41,7 @@ public class Board
         defeatGameList.Clear();
         winGameList.Clear();
         readerBoard.Clear();
+        isAllGameEnd = false;
 
         // 우선 무조건 Player1(0) 부터 턴을 시작한다.
         currentGameIndex = 0;
@@ -63,7 +65,7 @@ public class Board
         if (remainGameCount == 1)
         {
             for (int i = 0; i < Games.Count; i++)
-                if (Games[i].IsGameEnd == true)
+                if (Games[i].IsGameEnd == false)
                     winGameList.Add(i);
         }
         if (remainGameCount <= 1)
@@ -74,6 +76,7 @@ public class Board
             defeatGameList.Reverse();
             foreach (int gameIndex in defeatGameList)
                 readerBoard.Add(gameIndex);
+            isAllGameEnd = true;
             AllGameEnd?.Invoke();
         }
     }
@@ -83,6 +86,7 @@ public class Board
         foreach (Game game in Games)
             game.Dispose();
         CurrentGameChanged = null;
+        AllGameEnd = null;
     }
 
     private void StartCurrentTurn()
@@ -95,6 +99,9 @@ public class Board
     private void TurnEndCallback()
     {
         LogManager.Log($"Player{currentGameIndex + 1}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
+        // 모든 게임이 끝났다면 더 이상 턴을 진행하지 않는다.
+        if (isAllGameEnd)
+            return;
         currentGameIndex = (currentGameIndex + 1) % Games.Count;
         StartCurrentTurn();
     }

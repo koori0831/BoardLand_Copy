@@ -1,6 +1,5 @@
 using Core;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData>
 {
@@ -15,21 +14,25 @@ public class TitlePopupPresenter : PresenterBase<TitlePopupEvent, TitlePopupData
 
         if (titleView == null || titleModel == null)
         {
-            LogManager.Log("View or Model is not of the expected type.", ELogType.UI, ELogCategory.TitlePopup, ELogLevel.Error);
             return;
         }
     }
 
     public void OnClickStartButton()
     {
-        SceneManager.LoadScene("Game");
+        titleView.OpenPlayTypeSelectPopup();
     }
     public void OnClickSettingsButton()
     {
+        titleView.OpenSettingPopup();
     }
     public void OnClickExitButton()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     public override void Dispose()

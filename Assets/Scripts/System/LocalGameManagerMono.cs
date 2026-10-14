@@ -21,9 +21,20 @@ public class LocalGameManagerMono : MonoBehaviour
     private TileInfoUI tileInfoUI;
 
     [SerializeField]
+    private MainPopupUI mainPopupUI;
+
+    [SerializeField]
+    private GameEndPopupUI gameEndPopupUI;
+
+    [SerializeField]
     private SerializableDictionary<EElementType, TileLevelTableSO> tileLevelTables;
 
     private Board board;
+
+    private void Start()
+    {
+        StartGame();
+    }
 
     [LabelText("게임 시작")]
     [Button]
@@ -31,11 +42,15 @@ public class LocalGameManagerMono : MonoBehaviour
     {
         LogManager.Log($"게임 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
         board?.Dispose();
-        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData(), CreateTileLevelDataDictionary());
+        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData(), CreateTileLevelDataDictionary(), LocalGameSetting.PlayerCount);
         if (boardRenderer != null)
             boardRenderer.Bind(board);
         if (diceUI != null)
             diceUI.Bind(board.Games);
+        if (mainPopupUI != null)
+            mainPopupUI.Bind(board);
+        if (gameEndPopupUI != null)
+            gameEndPopupUI.Bind(board);
         board.StartGame();
         if (tileInfoUI != null)
             tileInfoUI.Bind(board);

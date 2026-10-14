@@ -8,6 +8,7 @@ public class Game
     private Enemy enemyUnit;
     private Action turnEndCallBack;
     private int playerPosition = 0;
+    private int turnCount = 0;
     private Tiles tiles;
     private Dictionary<EPlayerInputType, Action<Dice>> playerInputActionDictionary = null;
     private static readonly int diceInventorySize = 5;
@@ -15,8 +16,10 @@ public class Game
     public Player Player => playerUnit;
     public Enemy Enemy => enemyUnit;
     public int PlayerPosition => playerPosition;
+    public int TurnCount => turnCount;
 
     public event Action<int, int> PlayerMoved;
+    public event Action<int> TurnCountChanged;
     public event Action<List<Dice>> DiceRolled;
 
     public bool IsGameEnd = false;
@@ -44,6 +47,8 @@ public class Game
             return;
         }
         this.turnEndCallBack = turnEndCallBack;
+        turnCount++;
+        TurnCountChanged?.Invoke(turnCount);
 
         RollDice();
         GameCallbackChain();
@@ -68,6 +73,7 @@ public class Game
         playerUnit.Dispose();
         turnEndCallBack = null;
         PlayerMoved = null;
+        TurnCountChanged = null;
     }
 
     private void OnPlayerInput(PlayerInputResult inputResult, Action moveNext)
@@ -134,6 +140,8 @@ public class Game
         if (playerUnit.Status.GetCurrentHealth() <= 0 || enemyUnit.Status.GetCurrentHealth() <= 0)
         {
             IsGameEnd = true;
+            // 게임이 끝난 플레이어는 더 이상 입력을 받지 않는다.
+            playerUnit.Dispose();
             bool isPlayerWin = enemyUnit.Status.GetCurrentHealth() <= 0;
             gameEndCallback?.Invoke(isPlayerWin);
             EndTurn();

@@ -62,7 +62,8 @@ public class DiceDeckUI : MonoBehaviour
     {
         diceRollPopupUI.gameObject.SetActive(true);
         await diceRollPopupUI.PlayDiceRollAnimations(dices);
-        await UniTask.WaitUntil(() => diceRollPopupUI.gameObject.activeSelf == false);
+        // 씬이 넘어가 파괴된 경우에는 대기를 취소한다
+        await UniTask.WaitUntil(() => diceRollPopupUI.gameObject.activeSelf == false, cancellationToken: this.GetCancellationTokenOnDestroy());
         for (int i = 0; i < dices.Count; i++)
         {
             int index = i;

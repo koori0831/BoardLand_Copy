@@ -1,7 +1,10 @@
 using Core;
+using UnityEngine;
 
 public class TitlePopupView : ViewBase
 {
+    [SerializeField] private PlayTypeSelectPopupUI playTypeSelectPopupUI;
+    [SerializeField] private SettingPopupUI settingPopupUI;
     private TitlePopupPresenter titlePresenter;
     public override void Initialize(IPresenter presenter)
     {
@@ -25,5 +28,14 @@ public class TitlePopupView : ViewBase
     public void OnClickExitButton()
     {
         titlePresenter.OnClickExitButton();
+    }
+
+    public void OpenPlayTypeSelectPopup()
+    {
+        playTypeSelectPopupUI.OpenPopup();
+    }
+    public void OpenSettingPopup()
+    {
+        settingPopupUI.OpenPopup();
     }
 }
