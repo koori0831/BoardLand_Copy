@@ -110,7 +110,7 @@ public class Game
     {
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
         SkillContext context = new(enemyUnit, playerUnit, tiles);
-        SkillExecuter.ExecuteSkill(enemyUnit.GetNextSkill(context), context);
+        new SkillExecutor(enemyUnit.GetNextSkill(context), context).ExecuteSkill();
         LogManager.Log($"");
         moveNext?.Invoke();
     }

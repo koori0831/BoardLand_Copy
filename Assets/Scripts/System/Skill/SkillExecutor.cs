@@ -1,14 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public static class SkillExecuter
+public class SkillExecutor
 {
     // 어디까지 실행했는지 기록
-    private static int currentSkillEffectIndex = 0;
+    private int currentSkillEffectIndex = 0;
     // 스킬 효과 목록 스냅샷 캐싱
-    private static List<SkillEffectBase> effects = new();
+    private List<SkillEffectBase> effects = new();
 
-    public static void ExecuteSkill(Skill skill, SkillContext context)
+    private Skill skill;
+    private SkillContext context;
+    private Action onCompleateCallback;
+
+    public SkillExecutor(Skill skill, SkillContext context)
     {
+        this.skill = skill;
+        this.context = context;
+    }
+
+    public void ExecuteSkill(Action onCompleateCallback = null)
+    {
+        this.onCompleateCallback = onCompleateCallback;
+
         // 우선 이 스킬이 실행 가능한지 확인
         if (skill.CanUse(context) == false)
             return;
@@ -23,7 +36,7 @@ public static class SkillExecuter
         return;
     }
 
-    private static void ExecuteSkillEffect(SkillContext context)
+    private void ExecuteSkillEffect(SkillContext context)
     {
         // 만약 아직 실행되지 않은 스킬 효과가 있다면 실행
         if (currentSkillEffectIndex < effects.Count)
@@ -36,6 +49,7 @@ public static class SkillExecuter
             // 모든 스킬 효과가 실행되었으므로 상태를 정리
             effects.Clear();
             currentSkillEffectIndex = 0;
+            onCompleateCallback?.Invoke();
         }
     }
 }
