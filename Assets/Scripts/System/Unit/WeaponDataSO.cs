@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon", menuName = "Scriptable Objects/Weapon")]
 public class WeaponDataSO : ScriptableObject
 {
     public string WeaponName;
     public string WeaponDescription;
+    public Sprite WeaponIcon;
 
-    public List<SkillSO> Skills;
+    public SkillSO ActiveSkill;
 
     public WeaponData ConvertWeaponData()
     {
-        List<Skill> skillList = new();
-        foreach (SkillSO skillSO in Skills)
-            skillList.Add(new Skill(skillSO.SkillConditions, skillSO.SkillEffects));
+        Skill activeSkill = null;
+        if (ActiveSkill != null)
+            activeSkill = new Skill(ActiveSkill.SkillConditions, ActiveSkill.SkillEffects);
 
-        return new WeaponData(WeaponName, WeaponDescription, skillList);
+        return new WeaponData(WeaponName, WeaponDescription, WeaponIcon, activeSkill);
     }
 }

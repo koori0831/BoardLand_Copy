@@ -10,6 +10,7 @@ public class Game
     private int playerPosition = 0;
     private int turnCount = 0;
     private Tiles tiles;
+    private List<WeaponData> weaponDatas;
     private Dictionary<EPlayerInputType, Action<Dice>> playerInputActionDictionary = null;
     private static readonly int diceInventorySize = 5;
 
@@ -25,16 +26,18 @@ public class Game
     public bool IsGameEnd = false;
     private Action<bool> gameEndCallback;
 
-    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, Action<bool> gameEndCallback)
+    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, List<WeaponData> weaponDatas, Action<bool> gameEndCallback)
     {
         playerUnit = new Player(playerData.Status);
         enemyUnit = new Enemy(enemyData.Status, enemyData.Skills);
         this.tiles = tiles;
+        this.weaponDatas = weaponDatas;
         this.gameEndCallback = gameEndCallback;
         playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
         {
             [EPlayerInputType.Move] = PlayerMove,
             [EPlayerInputType.Action] = PlayerTileAction,
+            [EPlayerInputType.Weapon] = PlayerWeaponSkill,
             [EPlayerInputType.TurnEnd] = PlayerTurnEnd,
         };
     }
@@ -113,14 +116,26 @@ public class Game
     }
     private void PlayerTileAction(Dice dice)
     {
-        TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice);
-        tiles.TileList[playerPosition].TileAction(actionContext);
+        // 타일 행동 중에 타일이 교체될 수 있으므로 행동한 타일을 기억해둔다.
+        Tile tile = tiles.TileList[playerPosition];
+        TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice, tiles, playerPosition, weaponDatas);
+        tile.TileAction(actionContext);
 
-        if (tiles.TileList[playerPosition].Status.ElementType == dice.ElementType)
-            tiles.TileList[playerPosition].Status.AddEXP(dice.DiceNumber);
-        Skill tileSkill = tiles.TileList[playerPosition].Status.GetTileSkill();
+        if (tile.Status.ElementType == dice.ElementType)
+            tile.Status.AddEXP(dice.DiceNumber);
+        Skill tileSkill = tile.Status.GetTileSkill();
         if (tileSkill != null)
             new SkillExecutor(tileSkill, new SkillContext(playerUnit, enemyUnit, tiles)).ExecuteSkill();
+    }
+    private void PlayerWeaponSkill(Dice dice)
+    {
+        if (playerUnit.Weapon == null || playerUnit.Weapon.ActiveSkill == null)
+        {
+            LogManager.Log($"사용할 수 있는 무기 스킬이 없음.", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Warning);
+            return;
+        }
+        LogManager.Log($"무기 스킬 사용 : {playerUnit.Weapon.Data.WeaponName}", ELogType.Test, ELogCategory.GameSystem);
+        new SkillExecutor(playerUnit.Weapon.ActiveSkill, new SkillContext(playerUnit, enemyUnit, tiles)).ExecuteSkill();
     }
     private void PlayerTurnEnd(Dice dice)
     {

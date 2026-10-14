@@ -8,6 +8,7 @@ public enum EPlayerInputType
     Action,
     TurnEnd,
     Cancel,
+    Weapon,
 }
 
 public class Board
@@ -28,12 +29,12 @@ public class Board
     public event Action<int> CurrentGameChanged;
     public event Action AllGameEnd;
 
-    public Board(PlayerData playerData, EnemyData enemyData, Dictionary<EElementType, TileLevelData> tileLevelDatas, int playerCount)
+    public Board(PlayerData playerData, EnemyData enemyData, Dictionary<EElementType, TileLevelData> tileLevelDatas, List<WeaponData> weaponDatas, int playerCount)
     {
         Tiles = new Tiles(boardSize, tileLevelDatas);
 
         for (int i = 0; i < playerCount; i++)
-            Games.Add(new Game(playerData, enemyData, Tiles, OnGameEnd));
+            Games.Add(new Game(playerData, enemyData, Tiles, weaponDatas, OnGameEnd));
     }
 
     public void StartGame()

@@ -1,4 +1,4 @@
-using Core;
+﻿using Core;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +10,8 @@ public class DiceDeckUI : MonoBehaviour
     [SerializeField] private DiceRollPopupUI diceRollPopupUI;
     [SerializeField] private List<RectTransform> actionArea;
     [SerializeField] private List<RectTransform> cancelArea;
+    [SerializeField] private List<RectTransform> weaponArea;
+    [SerializeField] private WeaponInfoUI weaponInfoUI;
     [SerializeField] private Camera uiCamera;
     private List<DiceUI> diceUIList = new();
     private List<Game> games = new();
@@ -26,6 +28,11 @@ public class DiceDeckUI : MonoBehaviour
 
     private EPlayerInputType AreaCheck()
     {
+        foreach (RectTransform area in weaponArea)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(area, Mouse.current.position.ReadValue(), uiCamera))
+                return weaponInfoUI.HasWeapon ? EPlayerInputType.Weapon : EPlayerInputType.Cancel;
+        }
         foreach (RectTransform area in actionArea)
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(area, Mouse.current.position.ReadValue(), uiCamera))

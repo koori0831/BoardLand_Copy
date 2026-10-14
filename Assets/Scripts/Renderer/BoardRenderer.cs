@@ -24,6 +24,7 @@ public class BoardRenderer : MonoBehaviour
 
         OnCurrentGameChanged(board.CurrentGameIndex);
         board.CurrentGameChanged += OnCurrentGameChanged;
+        board.Tiles.TileChanged += OnTileChanged;
     }
 
     public Vector3 GetTilePosition(int tileIndex)
@@ -41,6 +42,11 @@ public class BoardRenderer : MonoBehaviour
     {
         for (int i = 0; i < gameRenderers.Count; i++)
             gameRenderers[i].SetFocused(i == currentIndex);
+    }
+
+    private void OnTileChanged(int changedTileIndex)
+    {
+        tileRenderers[changedTileIndex].Bind(board.Tiles.TileList[changedTileIndex]);
     }
 
     private void CreateTileRenderers(Tiles tiles)
@@ -77,7 +83,10 @@ public class BoardRenderer : MonoBehaviour
     private void Clear()
     {
         if (board != null)
+        {
             board.CurrentGameChanged -= OnCurrentGameChanged;
+            board.Tiles.TileChanged -= OnTileChanged;
+        }
         board = null;
 
         foreach (TileRenderer tileRenderer in tileRenderers)
@@ -92,7 +101,10 @@ public class BoardRenderer : MonoBehaviour
     private void OnDestroy()
     {
         if (board != null)
+        {
             board.CurrentGameChanged -= OnCurrentGameChanged;
+            board.Tiles.TileChanged -= OnTileChanged;
+        }
     }
 
     private void OnDrawGizmos()

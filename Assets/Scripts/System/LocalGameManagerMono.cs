@@ -27,7 +27,13 @@ public class LocalGameManagerMono : MonoBehaviour
     private GameEndPopupUI gameEndPopupUI;
 
     [SerializeField]
+    private WeaponInfoUI weaponInfoUI;
+
+    [SerializeField]
     private SerializableDictionary<EElementType, TileLevelTableSO> tileLevelTables;
+
+    [SerializeField]
+    private List<WeaponDataSO> weaponDataSOs;
 
     private Board board;
 
@@ -42,7 +48,7 @@ public class LocalGameManagerMono : MonoBehaviour
     {
         LogManager.Log($"게임 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
         board?.Dispose();
-        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData(), CreateTileLevelDataDictionary(), LocalGameSetting.PlayerCount);
+        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData(), CreateTileLevelDataDictionary(), CreateWeaponDataList(), LocalGameSetting.PlayerCount);
         if (boardRenderer != null)
             boardRenderer.Bind(board);
         if (diceUI != null)
@@ -51,6 +57,8 @@ public class LocalGameManagerMono : MonoBehaviour
             mainPopupUI.Bind(board);
         if (gameEndPopupUI != null)
             gameEndPopupUI.Bind(board);
+        if (weaponInfoUI != null)
+            weaponInfoUI.Bind(board);
         board.StartGame();
         if (tileInfoUI != null)
             tileInfoUI.Bind(board);
@@ -62,6 +70,14 @@ public class LocalGameManagerMono : MonoBehaviour
         foreach (var kvp in tileLevelTables)
             tileLevelDatas.TryAdd(kvp.Key, kvp.Value.ConvertTileLevelData());
         return tileLevelDatas;
+    }
+
+    private List<WeaponData> CreateWeaponDataList()
+    {
+        List<WeaponData> weaponDatas = new();
+        foreach (WeaponDataSO weaponDataSO in weaponDataSOs)
+            weaponDatas.Add(weaponDataSO.ConvertWeaponData());
+        return weaponDatas;
     }
 
     private void OnDestroy()

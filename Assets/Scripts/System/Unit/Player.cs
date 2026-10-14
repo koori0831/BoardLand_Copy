@@ -6,17 +6,27 @@ public class Player : Unit
 {
     // 가지고 있는 주사위 목록
     private List<Dice> diceInventory = null;
-    // 가지고 있는 아이템(무기) 목록
-    private List<Weapon> weaponInventory = null;
+    // 장착 중인 무기
+    private Weapon weapon = null;
 
     private UnitInputComponent inputComponenet;
     private Action<PlayerInputResult> inputCallback;
+
+    public Weapon Weapon => weapon;
+    public event Action<Weapon> WeaponChanged;
 
     public Player(UnitStatus status) : base(status)
     {
         inputComponenet = new UnitInputComponent();
         diceInventory = new List<Dice>();
-        weaponInventory = new List<Weapon>();
+    }
+
+    // 새 무기를 얻으면 기존 무기를 버림
+    public void EquipWeapon(Weapon newWeapon)
+    {
+        weapon = newWeapon;
+        LogManager.Log($"무기 장착 : {weapon.Data.WeaponName}", ELogType.Test, ELogCategory.GameSystem);
+        WeaponChanged?.Invoke(weapon);
     }
 
     public void InputReady(Action<PlayerInputResult> inputCallback)

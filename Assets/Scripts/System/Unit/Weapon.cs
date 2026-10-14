@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
-
-public class Weapon
+﻿public class Weapon
 {
-    public List<Skill> skills;
+    public WeaponData Data { get; private set; }
+    public Skill ActiveSkill => Data.ActiveSkill;
+
+    public Weapon(WeaponData data)
+    {
+        Data = data;
+    }
 }

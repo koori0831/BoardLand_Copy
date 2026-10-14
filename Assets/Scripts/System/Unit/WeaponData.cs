@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
 
 public class WeaponData
 {
     public string WeaponName;
     public string WeaponDescription;
-    public List<Skill> Skills;
+    public Sprite WeaponIcon;
+    public Skill ActiveSkill;
 
-    public WeaponData(string weaponName, string weaponDescription, List<Skill> skills)
+    public WeaponData(string weaponName, string weaponDescription, Sprite weaponIcon, Skill activeSkill)
     {
         WeaponName = weaponName;
         WeaponDescription = weaponDescription;
-        Skills = skills;
+        WeaponIcon = weaponIcon;
+        ActiveSkill = activeSkill;
     }
 }
