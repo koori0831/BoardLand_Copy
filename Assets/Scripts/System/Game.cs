@@ -120,7 +120,7 @@ public class Game
             tiles.TileList[playerPosition].Status.AddEXP(dice.DiceNumber);
         Skill tileSkill = tiles.TileList[playerPosition].Status.GetTileSkill();
         if (tileSkill != null)
-            new SkillExecutor(tileSkill, new SkillContext(playerUnit, enemyUnit, tiles));
+            new SkillExecutor(tileSkill, new SkillContext(playerUnit, enemyUnit, tiles)).ExecuteSkill();
     }
     private void PlayerTurnEnd(Dice dice)
     {
