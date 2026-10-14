@@ -19,12 +19,15 @@ public class Game
     public event Action<int, int> PlayerMoved;
     public event Action<List<Dice>> DiceRolled;
 
-    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles)
+    public bool IsGameEnd = false;
+    private Action<bool> gameEndCallback;
+
+    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, Action<bool> gameEndCallback)
     {
         playerUnit = new Player(playerData.Status);
         enemyUnit = new Enemy(enemyData.Status, enemyData.Skills);
         this.tiles = tiles;
-
+        this.gameEndCallback = gameEndCallback;
         playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
         {
             [EPlayerInputType.Move] = PlayerMove,
@@ -35,6 +38,11 @@ public class Game
 
     public void TurnStart(Action turnEndCallBack)
     {
+        if (IsGameEnd == true)
+        {
+            EndTurn();
+            return;
+        }
         this.turnEndCallBack = turnEndCallBack;
 
         RollDice();
@@ -73,8 +81,8 @@ public class Game
         {
             LogManager.Log($"처리할 수 없는 플레이어 행동({inputResult.ActionType}).", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Error);
         }
-
-        moveNext?.Invoke();
+        if(GameEndCheck() == false)
+            moveNext?.Invoke();
     }
 
     private void RollDice()
@@ -117,8 +125,21 @@ public class Game
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
         SkillContext context = new(enemyUnit, playerUnit, tiles);
         new SkillExecutor(enemyUnit.GetNextSkill(context), context).ExecuteSkill();
-        LogManager.Log($"");
-        moveNext?.Invoke();
+        if (GameEndCheck() == false)
+            moveNext?.Invoke();
+    }
+
+    private bool GameEndCheck()
+    {
+        if (playerUnit.Status.GetCurrentHealth() <= 0 || enemyUnit.Status.GetCurrentHealth() <= 0)
+        {
+            IsGameEnd = true;
+            bool isPlayerWin = enemyUnit.Status.GetCurrentHealth() <= 0;
+            gameEndCallback?.Invoke(isPlayerWin);
+            EndTurn();
+            return true;
+        }
+        return false;
     }
 
     private void EndTurn()

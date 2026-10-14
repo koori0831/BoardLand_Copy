@@ -3,12 +3,12 @@ using Core;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestGameManagerMono : MonoBehaviour
+public class LocalGameManagerMono : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     private PlayerDataSO playerDataSO;
-    
-    [SerializeField] 
+
+    [SerializeField]
     private EnemyDataSO enemyDataSO;
 
     [SerializeField]
