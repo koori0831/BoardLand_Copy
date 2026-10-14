@@ -12,36 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1383a829f9da0a4ba8976db852eebff, type: 3}
   m_Name: EnemyDeffence
   m_EditorClassIdentifier: Assembly-CSharp::SkillSO
-  skillName: 
-  skillDescription: 
-  skillIcon: {fileID: 0}
-  skillConditions:
-  - rid: 8685653955794960610
-  - rid: 8685653955794960608
-  - rid: 8685653955794960611
-  skillEffects:
-  - rid: 8685653955794960606
+  SkillName: 
+  SkillDescription: 
+  SkillIcon: {fileID: 0}
+  SkillConditions:
+  - rid: 8685653994902651183
+  - rid: 8685653994902651184
+  - rid: 8685653994902651185
+  SkillEffects:
+  - rid: 8685653994902651186
   references:
     version: 2
     RefIds:
-    - rid: 8685653955794960606
-      type: {class: AddDeffendPointSkill, ns: , asm: Assembly-CSharp}
-      data:
-        AddAmount: 2
-        SkillTarget: 0
-    - rid: 8685653955794960608
-      type: {class: LastSkillIndexCheck, ns: , asm: Assembly-CSharp}
-      data:
-        CheckIndex: 2
-        AllowCheckIndex: 0
-    - rid: 8685653955794960610
+    - rid: 8685653994902651183
       type: {class: LastSkillIndexCheck, ns: , asm: Assembly-CSharp}
       data:
         CheckIndex: 1
         AllowCheckIndex: 0
-    - rid: 8685653955794960611
+    - rid: 8685653994902651184
+      type: {class: LastSkillIndexCheck, ns: , asm: Assembly-CSharp}
+      data:
+        CheckIndex: 2
+        AllowCheckIndex: 0
+    - rid: 8685653994902651185
       type: {class: HPPercentageCheck, ns: , asm: Assembly-CSharp}
       data:
         HigherPercentage: 0
         LowerPercentage: 50
+        SkillTarget: 0
+    - rid: 8685653994902651186
+      type: {class: AddDeffendPointSkill, ns: , asm: Assembly-CSharp}
+      data:
+        AddAmount: 2
         SkillTarget: 0

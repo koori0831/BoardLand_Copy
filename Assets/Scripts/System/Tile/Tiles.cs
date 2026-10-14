@@ -5,7 +5,7 @@ public class Tiles
 {
     public List<Tile> TileList;
 
-    public Tiles(int boardSize)
+    public Tiles(int boardSize, Dictionary<EElementType, TileLevelData> tileLevelDatas)
     {
         TileList = new List<Tile>();
         for (int i = 0; i < boardSize; i++)

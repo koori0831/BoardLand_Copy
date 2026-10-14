@@ -13,7 +13,7 @@ public class WeaponDataSO : ScriptableObject
     {
         List<Skill> skillList = new();
         foreach (SkillSO skillSO in Skills)
-            skillList.Add(new Skill(skillSO.skillConditions, skillSO.skillEffects));
+            skillList.Add(new Skill(skillSO.SkillConditions, skillSO.SkillEffects));
 
         return new WeaponData(WeaponName, WeaponDescription, skillList);
     }

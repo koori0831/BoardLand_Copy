@@ -22,9 +22,9 @@ public class Board
     public int CurrentGameIndex => currentGameIndex;
     public event Action<int> CurrentGameChanged;
 
-    public Board(PlayerData playerData, EnemyData enemyData)
+    public Board(PlayerData playerData, EnemyData enemyData, Dictionary<EElementType, TileLevelData> tileLevelDatas)
     {
-        Tiles = new Tiles(boardSize);
+        Tiles = new Tiles(boardSize, tileLevelDatas);
 
         for (int i = 0; i < playerCount; i++)
             Games.Add(new Game(playerData, enemyData, Tiles));

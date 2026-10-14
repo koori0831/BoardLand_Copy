@@ -407,7 +407,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 115, y: -15}
-  m_SizeDelta: {x: 0, y: 20.07}
+  m_SizeDelta: {x: 42.01, y: 20.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &138571554
 MonoBehaviour:
@@ -6077,6 +6077,16 @@ MonoBehaviour:
   enemyDataSO: {fileID: 11400000, guid: c393662804a72df4fac1635ea9cec719, type: 2}
   boardRenderer: {fileID: 2012971467}
   diceUI: {fileID: 1194717699}
+  tileLevelTables:
+    serializableItems:
+    - key: 0
+      value: {fileID: 11400000, guid: df797b05acc158e4bbb09764b61993ad, type: 2}
+    - key: 1
+      value: {fileID: 11400000, guid: fc6f89bb836c3304dbea091b6bfa8af3, type: 2}
+    - key: 2
+      value: {fileID: 11400000, guid: 9ef4ecd4abe0319428b10fa646496915, type: 2}
+    - key: 3
+      value: {fileID: 11400000, guid: c94a52f2d3ec96d4a98a893e9e7e5d78, type: 2}
 --- !u!4 &1837889936
 Transform:
   m_ObjectHideFlags: 0
