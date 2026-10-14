@@ -1,0 +1,23 @@
+# 줄바꿈 정규화: 저장소에는 LF, 작업 폴더는 OS 기본값
+* text=auto
+
+*.cs     text diff=csharp
+*.slnx   text eol=crlf
+*.sln    text eol=crlf
+*.csproj text eol=crlf
+
+# Unity YAML 에셋
+*.unity  text
+*.prefab text
+*.asset  text
+*.mat    text
+*.meta   text
+
+# 바이너리
+*.png binary
+*.jpg binary
+*.fbx binary
+*.ttf binary
+*.otf binary
+*.wav binary
+*.mp3 binary

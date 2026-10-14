@@ -87,7 +87,7 @@ public class Game
             diceList.Add(new Dice(diceNumber, elementType));
         }
         playerUnit.DiceInventorySetting(diceList);
-        DiceRolled.Invoke(diceList);
+        DiceRolled?.Invoke(diceList);
     }
 
     private void PlayerMove(Dice dice)
