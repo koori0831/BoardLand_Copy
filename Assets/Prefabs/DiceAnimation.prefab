@@ -161,4 +161,4 @@ MonoBehaviour:
       value: RollAnimation(Water)
     - key: 3
       value: RollAnimation(Fire)
-  defaultRollTime: 2
+  defaultRollTime: 0.5

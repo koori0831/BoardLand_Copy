@@ -8,7 +8,7 @@ public class DiceRollPopupUI : MonoBehaviour
     [SerializeField] Transform layoutParent;
     private bool isAnimaitonPlaying;
 
-    public async UniTask DrawAnimations(List<Dice> dices)
+    public async UniTask PlayDiceRollAnimations(List<Dice> dices)
     {
         isAnimaitonPlaying = true;
         foreach (Transform child in layoutParent)

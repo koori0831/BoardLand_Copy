@@ -9,11 +9,11 @@ public class DiceRollAnimation : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SerializableDictionary<EElementType, SpriteList> diceImages;
     [SerializeField] private SerializableDictionary<EElementType, string> diceAnimations; // stateName
-    [SerializeField] private float defaultRollTime = 1.0f;
+    [SerializeField] private float defaultRollTime = 0.5f;
 
     public async UniTask StartAnimation(EElementType elementType, int diceNumber, int diceIndex)
     {
-        await PlayForSecondsAsync(diceAnimations[elementType], (defaultRollTime + diceIndex) / 2f);
+        await PlayForSecondsAsync(diceAnimations[elementType], (defaultRollTime + (diceIndex / 2f)) / 2);
         image.sprite = diceImages[elementType].sprites[diceNumber - 1];
     }
 

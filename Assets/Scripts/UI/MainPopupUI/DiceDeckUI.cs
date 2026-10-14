@@ -61,7 +61,7 @@ public class DiceDeckUI : MonoBehaviour
     private async UniTaskVoid SpawnDiceUIAfterAnimation(List<Dice> dices)
     {
         diceRollPopupUI.gameObject.SetActive(true);
-        await diceRollPopupUI.DrawAnimations(dices);
+        await diceRollPopupUI.PlayDiceRollAnimations(dices);
         await UniTask.WaitUntil(() => diceRollPopupUI.gameObject.activeSelf == false);
         for (int i = 0; i < dices.Count; i++)
         {
