@@ -26,6 +26,7 @@ public class TileInfoUI : MonoBehaviour
 
         this.board = board;
         game = board.Games[board.CurrentGameIndex];
+        board.Tiles.TileChanged += OnTileChanged;
         board.CurrentGameChanged += OnGameChanged;
         OnGameChanged(board.CurrentGameIndex);
     }
@@ -85,6 +86,12 @@ public class TileInfoUI : MonoBehaviour
                 .Bind(_ => expSlider.value = _)
                 .AddTo(this);
         }
+    }
+
+    private void OnTileChanged(int changedTileIndex)
+    {
+        if (game.PlayerPosition == changedTileIndex)
+            OnPlayerMove();
     }
 
     private void OnDestroy()
