@@ -20,7 +20,7 @@ public class Tiles
         }
     }
 
-    public void ChangeTile(int tileIndex, ETileType tileType, EElementType elementType)
+    public void ReplaceTile(int tileIndex, ETileType tileType, EElementType elementType)
     {
         TileList[tileIndex] = TileFactory.Create(tileType, elementType, tileLevelDatas[elementType]);
         TileChanged?.Invoke(tileIndex);
