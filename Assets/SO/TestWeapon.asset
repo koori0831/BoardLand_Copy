@@ -15,4 +15,5 @@ MonoBehaviour:
   WeaponName: Test Weapon
   WeaponDescription: "\uC801\uC5D0\uAC8C 10 \uD53C\uD574"
   WeaponIcon: {fileID: 21300000, guid: c8ca90ce2f34085498ff062df59c5c76, type: 3}
+  Price: 20
   ActiveSkill: {fileID: 11400000, guid: fda379f7a3792a7459e6652d3e2092bc, type: 2}

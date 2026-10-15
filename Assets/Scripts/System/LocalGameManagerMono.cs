@@ -30,10 +30,19 @@ public class LocalGameManagerMono : MonoBehaviour
     private WeaponInfoUI weaponInfoUI;
 
     [SerializeField]
+    private ItemInventoryUI itemInventoryUI;
+
+    [SerializeField]
+    private ShopPopupUI shopPopupUI;
+
+    [SerializeField]
     private SerializableDictionary<EElementType, TileLevelTableSO> tileLevelTables;
 
     [SerializeField]
     private List<WeaponDataSO> weaponDataSOs;
+
+    [SerializeField]
+    private List<ItemDataSO> itemDataSOs; // 상점에서 파는 아이템 목록
 
     private Board board;
 
@@ -48,7 +57,8 @@ public class LocalGameManagerMono : MonoBehaviour
     {
         LogManager.Log($"게임 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
         board?.Dispose();
-        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData(), CreateTileLevelDataDictionary(), CreateWeaponDataList(), LocalGameSetting.PlayerCount);
+        List<WeaponData> weaponDatas = CreateWeaponDataList();
+        board = new Board(playerDataSO.PlayerData, enemyDataSO.ConvertEnemyData(), CreateTileLevelDataDictionary(), weaponDatas, LocalGameSetting.PlayerCount);
         if (boardRenderer != null)
             boardRenderer.Bind(board);
         if (diceUI != null)
@@ -59,6 +69,10 @@ public class LocalGameManagerMono : MonoBehaviour
             gameEndPopupUI.Bind(board);
         if (weaponInfoUI != null)
             weaponInfoUI.Bind(board);
+        if (itemInventoryUI != null)
+            itemInventoryUI.Bind(board);
+        if (shopPopupUI != null)
+            shopPopupUI.Bind(board, CreateItemDataList(), weaponDatas);
         board.StartGame();
         if (tileInfoUI != null)
             tileInfoUI.Bind(board);
@@ -78,6 +92,14 @@ public class LocalGameManagerMono : MonoBehaviour
         foreach (WeaponDataSO weaponDataSO in weaponDataSOs)
             weaponDatas.Add(weaponDataSO.ConvertWeaponData());
         return weaponDatas;
+    }
+
+    private List<ItemData> CreateItemDataList()
+    {
+        List<ItemData> itemDatas = new();
+        foreach (ItemDataSO itemDataSO in itemDataSOs)
+            itemDatas.Add(itemDataSO.ConvertItemData());
+        return itemDatas;
     }
 
     private void OnDestroy()

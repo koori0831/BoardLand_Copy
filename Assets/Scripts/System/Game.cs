@@ -9,6 +9,8 @@ public class Game
     private Action turnEndCallBack;
     private int playerPosition = 0;
     private int turnCount = 0;
+    private int lapCount = 0;
+    private static readonly int lapRewardGold = 10;
     private Tiles tiles;
     private List<WeaponData> weaponDatas;
     private Dictionary<EPlayerInputType, Action<Dice>> playerInputActionDictionary = null;
@@ -18,9 +20,12 @@ public class Game
     public Enemy Enemy => enemyUnit;
     public int PlayerPosition => playerPosition;
     public int TurnCount => turnCount;
+    public int LapCount => lapCount;
 
     public event Action<int, int> PlayerMoved;
     public event Action<int> TurnCountChanged;
+    public event Action<int> LapCountChanged;
+    public event Action ShopOpened;
     public event Action<List<Dice>> DiceRolled;
 
     public bool IsGameEnd = false;
@@ -77,6 +82,8 @@ public class Game
         turnEndCallBack = null;
         PlayerMoved = null;
         TurnCountChanged = null;
+        LapCountChanged = null;
+        ShopOpened = null;
     }
 
     private void OnPlayerInput(PlayerInputResult inputResult, Action moveNext)
@@ -110,15 +117,22 @@ public class Game
     private void PlayerMove(Dice dice)
     {
         int from = playerPosition;
+        if (playerPosition + dice.DiceNumber >= tiles.TileList.Count)
+        {
+            lapCount++;
+            LapCountChanged?.Invoke(lapCount);
+            playerUnit.AddGold(lapRewardGold);
+            LogManager.Log($"{lapCount}바퀴 완료. {lapRewardGold}골드 획득", ELogType.Test, ELogCategory.GameSystem);
+        }
         playerPosition = (playerPosition + dice.DiceNumber) % tiles.TileList.Count;
         PlayerMoved?.Invoke(from, dice.DiceNumber);
         LogManager.Log($"플레이어 {dice.DiceNumber}만큼 이동. 현재 타일 타입: {tiles.TileList[playerPosition].GetType()}", ELogType.Test, ELogCategory.GameSystem);
     }
     private void PlayerTileAction(Dice dice)
     {
-        // 타일 행동 중에 타일이 교체될 수 있으므로 행동한 타일을 기억해둔다.
+        // 타일 행동 중에 타일이 교체될 수 있으므로 행동한 타일을 기억해둔다
         Tile tile = tiles.TileList[playerPosition];
-        TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice, tiles, playerPosition, weaponDatas);
+        TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice, tiles, playerPosition, weaponDatas, () => ShopOpened?.Invoke());
         tile.TileAction(actionContext);
 
         if (tile.Status.ElementType == dice.ElementType)
@@ -137,6 +151,11 @@ public class Game
         LogManager.Log($"무기 스킬 사용 : {playerUnit.Weapon.Data.WeaponName}", ELogType.Test, ELogCategory.GameSystem);
         new SkillExecutor(playerUnit.Weapon.ActiveSkill, new SkillContext(playerUnit, enemyUnit, tiles)).ExecuteSkill();
     }
+    public void UseItem(int itemIndex)
+    {
+        playerUnit.UseItem(itemIndex, new SkillContext(playerUnit, enemyUnit, tiles));
+    }
+
     private void PlayerTurnEnd(Dice dice)
     {
     }

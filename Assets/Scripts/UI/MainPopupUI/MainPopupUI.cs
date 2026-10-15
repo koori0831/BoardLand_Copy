@@ -5,6 +5,8 @@ using UnityEngine;
 public class MainPopupUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text turnCountText;
+    [SerializeField] private TMP_Text lapCountText;
+    [SerializeField] private TMP_Text goldText;
     [SerializeField] private SettingPopupUI settingPopupUI;
 
     private Board board;
@@ -21,18 +23,40 @@ public class MainPopupUI : MonoBehaviour
 
     private void OnGameChanged(int currentGameIndex)
     {
-        if (game != null)
-            game.TurnCountChanged -= OnTurnCountChanged;
+        UnbindGame();
 
         game = board.Games[currentGameIndex];
         OnTurnCountChanged(game.TurnCount);
+        OnLapCountChanged(game.LapCount);
+        OnGoldChanged(game.Player.Gold);
 
         game.TurnCountChanged += OnTurnCountChanged;
+        game.LapCountChanged += OnLapCountChanged;
+        game.Player.GoldChanged += OnGoldChanged;
+    }
+
+    private void UnbindGame()
+    {
+        if (game == null)
+            return;
+        game.TurnCountChanged -= OnTurnCountChanged;
+        game.LapCountChanged -= OnLapCountChanged;
+        game.Player.GoldChanged -= OnGoldChanged;
     }
 
     private void OnTurnCountChanged(int turnCount)
     {
         turnCountText.text = turnCount.ToString("00");
+    }
+
+    private void OnLapCountChanged(int lapCount)
+    {
+        lapCountText.text = lapCount.ToString("00");
+    }
+
+    private void OnGoldChanged(int gold)
+    {
+        goldText.text = gold.ToString();
     }
 
     public void ClickTurnEnd()
@@ -49,7 +73,6 @@ public class MainPopupUI : MonoBehaviour
     {
         if (board != null)
             board.CurrentGameChanged -= OnGameChanged;
-        if (game != null)
-            game.TurnCountChanged -= OnTurnCountChanged;
+        UnbindGame();
     }
 }

@@ -31,7 +31,8 @@ public class SkillExecutor
         currentSkillEffectIndex = 0;
 
         // 스킬 효과 목록을 캐싱하고 실행
-        effects = skill.skillEffects;
+        // 원본 리스트를 그대로 쓰면 실행 후 Clear()에서 스킬(SO) 효과가 지워지므로 복사해서 사용한다.
+        effects = new List<SkillEffectBase>(skill.skillEffects);
         ExecuteSkillEffect(context);
         return;
     }

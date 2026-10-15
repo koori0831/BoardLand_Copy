@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class TileActionContext
 {
@@ -8,7 +9,8 @@ public class TileActionContext
     public Tiles Tiles;
     public int TileIndex;
     public List<WeaponData> WeaponDatas;
-    public TileActionContext(Player player, Enemy enemy, Dice dice, Tiles tiles, int tileIndex, List<WeaponData> weaponDatas)
+    public Action OpenShop;
+    public TileActionContext(Player player, Enemy enemy, Dice dice, Tiles tiles, int tileIndex, List<WeaponData> weaponDatas, Action openShop)
     {
         Player = player;
         Enemy = enemy;
@@ -16,5 +18,6 @@ public class TileActionContext
         Tiles = tiles;
         TileIndex = tileIndex;
         WeaponDatas = weaponDatas;
+        OpenShop = openShop;
     }
 }

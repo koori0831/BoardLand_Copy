@@ -6,6 +6,7 @@ public class WeaponDataSO : ScriptableObject
     public string WeaponName;
     public string WeaponDescription;
     public Sprite WeaponIcon;
+    public int Price;
 
     public SkillSO ActiveSkill;
 
@@ -15,6 +16,6 @@ public class WeaponDataSO : ScriptableObject
         if (ActiveSkill != null)
             activeSkill = new Skill(ActiveSkill.SkillConditions, ActiveSkill.SkillEffects);
 
-        return new WeaponData(WeaponName, WeaponDescription, WeaponIcon, activeSkill);
+        return new WeaponData(WeaponName, WeaponDescription, WeaponIcon, Price, activeSkill);
     }
 }

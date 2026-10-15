@@ -7,6 +7,7 @@
             ETileType.Deffend => new DeffendTile(elementType, levelData),
             ETileType.Heal => new HealTile(elementType, levelData),
             ETileType.TreasureBox => new TreasureBoxTile(elementType, levelData),
+            ETileType.Shop => new ShopTile(elementType, levelData),
             _ => null
         };
     }
