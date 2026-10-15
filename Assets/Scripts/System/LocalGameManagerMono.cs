@@ -62,7 +62,7 @@ public class LocalGameManagerMono : MonoBehaviour
         if (boardRenderer != null)
             boardRenderer.Bind(board);
         if (diceUI != null)
-            diceUI.Bind(board);
+            diceUI.Bind(board.Games);
         if (mainPopupUI != null)
             mainPopupUI.Bind(board);
         if (gameEndPopupUI != null)

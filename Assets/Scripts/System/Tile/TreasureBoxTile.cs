@@ -1,5 +1,4 @@
-﻿using Core;
-using System;
+﻿using System;
 
 public class TreasureBoxTile : Tile
 {
@@ -28,10 +27,6 @@ public class TreasureBoxTile : Tile
         }
 
         // 사용한 보물상자는 보물상자가 아닌 랜덤한 타일로 바뀐다.
-        ETileType nextTileType = new RandomEnumValue<ETileType>().RandomEnum;
-        while (nextTileType == ETileType.TreasureBox)
-            nextTileType = new RandomEnumValue<ETileType>().RandomEnum;
-        EElementType nextElementType = new RandomEnumValue<EElementType>().RandomEnum;
-        actionContext.Tiles.ReplaceTile(actionContext.TileIndex, nextTileType, nextElementType);
+        actionContext.Tiles.ReplaceToRandomTile(actionContext.TileIndex, ETileType.TreasureBox);
     }
 }

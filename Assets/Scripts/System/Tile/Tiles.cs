@@ -25,4 +25,13 @@ public class Tiles
         TileList[tileIndex] = TileFactory.Create(tileType, elementType, tileLevelDatas[elementType]);
         TileChanged?.Invoke(tileIndex);
     }
+
+    public void ReplaceToRandomTile(int tileIndex, ETileType exceptTileType)
+    {
+        ETileType nextTileType = new RandomEnumValue<ETileType>().RandomEnum;
+        while (nextTileType == exceptTileType)
+            nextTileType = new RandomEnumValue<ETileType>().RandomEnum;
+        EElementType nextElementType = new RandomEnumValue<EElementType>().RandomEnum;
+        ReplaceTile(tileIndex, nextTileType, nextElementType);
+    }
 }
