@@ -64,7 +64,7 @@ public class Game
     private async UniTaskVoid GameLoop()
     {
         PlayerInputResult inputResult = await playerUnit.InputReady();
-        await PlayerPhase(inputResult);
+        PlayerPhase(inputResult);
         if (GameEndCheck() == true)
             return;
 
@@ -72,7 +72,7 @@ public class Game
             EndTurn();
         else
         {
-            await EnemyPhase();
+            EnemyPhase();
             if (GameEndCheck() == false)
                 GameLoop().Forget();
         }
@@ -88,7 +88,7 @@ public class Game
         ShopOpened = null;
     }
 
-    private async UniTask PlayerPhase(PlayerInputResult inputResult)
+    private void PlayerPhase(PlayerInputResult inputResult)
     {
         LogManager.Log($"플레이어 행동({inputResult.ActionType}).", ELogType.Test, ELogCategory.GameSystem);
         if (playerInputActionDictionary.TryGetValue(inputResult.ActionType, out Action<Dice> playerAction))
@@ -160,7 +160,7 @@ public class Game
     {
     }
 
-    private async UniTask EnemyPhase()
+    private void EnemyPhase()
     {
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
         SkillContext context = new(enemyUnit, playerUnit, tiles);
