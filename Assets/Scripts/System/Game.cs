@@ -1,4 +1,5 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
@@ -57,21 +58,24 @@ public class Game
         TurnCountChanged?.Invoke(turnCount);
 
         RollDice();
-        GameCallbackChain();
+        GameLoop().Forget();
     }
 
-    private void GameCallbackChain()
+    private async UniTaskVoid GameLoop()
     {
-        playerUnit.InputReady(inputResult =>
+        PlayerInputResult inputResult = await playerUnit.InputReady();
+        await PlayerPhase(inputResult);
+        if (GameEndCheck() == true)
+            return;
+
+        if (inputResult.ActionType == EPlayerInputType.TurnEnd)
+            EndTurn();
+        else
         {
-            OnPlayerInput(inputResult, () =>
-            {
-                if (inputResult.ActionType == EPlayerInputType.TurnEnd)
-                    EndTurn();
-                else
-                    EnemyPhase(GameCallbackChain);
-            });
-        });
+            await EnemyPhase();
+            if (GameEndCheck() == false)
+                GameLoop().Forget();
+        }
     }
 
     public void Dispose()
@@ -84,7 +88,7 @@ public class Game
         ShopOpened = null;
     }
 
-    private void OnPlayerInput(PlayerInputResult inputResult, Action moveNext)
+    private async UniTask PlayerPhase(PlayerInputResult inputResult)
     {
         LogManager.Log($"플레이어 행동({inputResult.ActionType}).", ELogType.Test, ELogCategory.GameSystem);
         if (playerInputActionDictionary.TryGetValue(inputResult.ActionType, out Action<Dice> playerAction))
@@ -95,8 +99,6 @@ public class Game
         {
             LogManager.Log($"처리할 수 없는 플레이어 행동({inputResult.ActionType}).", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Error);
         }
-        if(GameEndCheck() == false)
-            moveNext?.Invoke();
     }
 
     private void RollDice()
@@ -158,13 +160,11 @@ public class Game
     {
     }
 
-    private void EnemyPhase(Action moveNext)
+    private async UniTask EnemyPhase()
     {
         LogManager.Log($"적의 공격", ELogType.Test, ELogCategory.GameSystem);
         SkillContext context = new(enemyUnit, playerUnit, tiles);
         new SkillExecutor(enemyUnit.GetNextSkill(context), context).ExecuteSkill();
-        if (GameEndCheck() == false)
-            moveNext?.Invoke();
     }
 
     private bool GameEndCheck()

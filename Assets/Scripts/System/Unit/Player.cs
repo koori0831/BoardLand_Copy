@@ -1,4 +1,5 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ public class Player : Unit
     private int gold = 0;
 
     private UnitInputComponent inputComponenet;
-    private Action<PlayerInputResult> inputCallback;
+    PlayerInputResult inputResult;
 
     public Weapon Weapon => weapon;
     public List<Item> ItemInventory => itemInventory;
@@ -91,10 +92,12 @@ public class Player : Unit
         WeaponChanged?.Invoke(weapon);
     }
 
-    public void InputReady(Action<PlayerInputResult> inputCallback)
+    public async UniTask<PlayerInputResult> InputReady()
     {
-        this.inputCallback = inputCallback;
+        inputResult = null;
         inputComponenet.Enable(OnInput);
+        await UniTask.WaitUntil(() => inputResult != null);
+        return inputResult;
     }
 
     public void OnInput(EPlayerInputType actionType, int diceIndex)
@@ -104,8 +107,7 @@ public class Player : Unit
             LogManager.Log($"인벤토리에 {diceIndex}번 인덱스가 없습니다", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Error);
             return;
         }
-        PlayerInputResult inputResult = new PlayerInputResult(actionType, diceInventory[diceIndex]);
-        inputCallback.Invoke(inputResult);
+        inputResult = new PlayerInputResult(actionType, diceInventory[diceIndex]);
     }
 
     public void DiceInventorySetting(List<Dice> diceList)
