@@ -14,7 +14,7 @@ public class Player : Unit
     private int gold = 0;
 
     private UnitInputComponent inputComponenet;
-    PlayerInputResult inputResult;
+    private PlayerInputResult inputResult = null;
 
     public Weapon Weapon => weapon;
     public List<Item> ItemInventory => itemInventory;
