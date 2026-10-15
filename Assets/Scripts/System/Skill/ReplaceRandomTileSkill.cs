@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-// 보드의 랜덤한 타일 여러 개를 랜덤한 타일로 바꾼다.
 [Serializable]
 public class ReplaceRandomTileSkill : SkillEffectBase
 {
@@ -17,7 +16,6 @@ public class ReplaceRandomTileSkill : SkillEffectBase
 
         for (int i = 0; i < ReplaceCount && tileIndexList.Count > 0; i++)
         {
-            // 같은 타일이 두 번 바뀌지 않도록 뽑은 인덱스는 목록에서 뺀다.
             int pick = random.Next(0, tileIndexList.Count);
             int tileIndex = tileIndexList[pick];
             tileIndexList.RemoveAt(pick);

@@ -8,7 +8,7 @@ public class Player : Unit
     private List<Dice> diceInventory = null;
     // 장착 중인 무기
     private Weapon weapon = null;
-    // 가지고 있는 아이템 목록 (겹치지 않고 한 칸에 하나씩)
+    // 가지고 있는 아이템 목록
     private List<Item> itemInventory = null;
     private int gold = 0;
 
@@ -54,7 +54,6 @@ public class Player : Unit
         return true;
     }
 
-    // 사용한 아이템은 인벤토리에서 빠진다.
     public void UseItem(int itemIndex, SkillContext context)
     {
         if (itemIndex < 0 || itemIndex >= itemInventory.Count)
