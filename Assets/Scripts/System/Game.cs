@@ -8,17 +8,18 @@ public class Game
     private Enemy enemyUnit;
     private Action turnEndCallBack;
     private int playerPosition = 0;
+    private Dictionary<int, int> tileActionCountDictionary = new(); // 이번 턴에 타일별로 행동한 횟수
     private int turnCount = 0;
     private int lapCount = 0;
-    private static readonly int lapRewardGold = 10;
     private Tiles tiles;
     private List<WeaponData> weaponDatas;
     private Dictionary<EPlayerInputType, Action<Dice>> playerInputActionDictionary = null;
-    private static readonly int diceInventorySize = 5;
 
     public Player Player => playerUnit;
     public Enemy Enemy => enemyUnit;
     public int PlayerPosition => playerPosition;
+    // 같은 타일에서는 한 턴에 정해진 횟수만 행동할 수 있다.
+    public bool CanTileAction => tileActionCountDictionary.TryGetValue(playerPosition, out int actionCount) == false || actionCount < GameConstant.TileActionLimitPerTurn;
     public int TurnCount => turnCount;
     public int LapCount => lapCount;
 
@@ -57,6 +58,7 @@ public class Game
         this.turnEndCallBack = turnEndCallBack;
         turnCount++;
         TurnCountChanged?.Invoke(turnCount);
+        tileActionCountDictionary.Clear();
 
         RollDice();
         GameCallbackChain();
@@ -104,7 +106,7 @@ public class Game
     private void RollDice()
     {
         List<Dice> diceList = new List<Dice>();
-        for (int i = 0; i < diceInventorySize; i++)
+        for (int i = 0; i < GameConstant.DiceInventorySize; i++)
         {
             int diceNumber = new Random().Next(1, 7);
             EElementType elementType = new RandomEnumValue<EElementType>().RandomEnum;
@@ -121,8 +123,8 @@ public class Game
         {
             lapCount++;
             LapCountChanged?.Invoke(lapCount);
-            playerUnit.AddGold(lapRewardGold);
-            LogManager.Log($"{lapCount}바퀴 완료. {lapRewardGold}골드 획득", ELogType.Test, ELogCategory.GameSystem);
+            playerUnit.AddGold(GameConstant.LapRewardGold);
+            LogManager.Log($"{lapCount}바퀴 완료. {GameConstant.LapRewardGold}골드 획득", ELogType.Test, ELogCategory.GameSystem);
         }
         playerPosition = (playerPosition + dice.DiceNumber) % tiles.TileList.Count;
         PlayerMoved?.Invoke(from, dice.DiceNumber);
@@ -130,6 +132,14 @@ public class Game
     }
     private void PlayerTileAction(Dice dice)
     {
+        if (CanTileAction == false)
+        {
+            LogManager.Log($"이번 턴에 이미 행동한 타일.", ELogType.Test, ELogCategory.GameSystem, ELogLevel.Warning);
+            return;
+        }
+        tileActionCountDictionary.TryGetValue(playerPosition, out int actionCount);
+        tileActionCountDictionary[playerPosition] = actionCount + 1;
+
         // 타일 행동 중에 타일이 교체될 수 있으므로 행동한 타일을 기억해둔다
         Tile tile = tiles.TileList[playerPosition];
         TileActionContext actionContext = new TileActionContext(playerUnit, enemyUnit, dice, tiles, playerPosition, weaponDatas, () => ShopOpened?.Invoke());

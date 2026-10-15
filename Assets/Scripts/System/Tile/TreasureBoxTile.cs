@@ -3,8 +3,6 @@ using System;
 
 public class TreasureBoxTile : Tile
 {
-    private static readonly int mimicDamage = 5;
-
     public TreasureBoxTile(EElementType elementType, TileLevelData levelData) : base(elementType, levelData)
     {
     }
@@ -26,7 +24,7 @@ public class TreasureBoxTile : Tile
         else
         {
             // 미믹에게 공격받는다.
-            actionContext.Player.TakeAttack(mimicDamage);
+            actionContext.Player.TakeAttack(GameConstant.MimicDamage);
         }
 
         // 사용한 보물상자는 보물상자가 아닌 랜덤한 타일로 바뀐다.

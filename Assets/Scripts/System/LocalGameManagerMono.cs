@@ -42,7 +42,7 @@ public class LocalGameManagerMono : MonoBehaviour
     private List<WeaponDataSO> weaponDataSOs;
 
     [SerializeField]
-    private List<ItemDataSO> itemDataSOs; // 상점에서 파는 아이템 목록
+    private List<ItemDataSO> itemDataSOs;
 
     private Board board;
 
@@ -62,7 +62,7 @@ public class LocalGameManagerMono : MonoBehaviour
         if (boardRenderer != null)
             boardRenderer.Bind(board);
         if (diceUI != null)
-            diceUI.Bind(board.Games);
+            diceUI.Bind(board);
         if (mainPopupUI != null)
             mainPopupUI.Bind(board);
         if (gameEndPopupUI != null)

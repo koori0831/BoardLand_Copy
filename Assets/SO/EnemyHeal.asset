@@ -37,5 +37,5 @@ MonoBehaviour:
     - rid: 8685653994902651189
       type: {class: HealSkill, ns: , asm: Assembly-CSharp}
       data:
-        HealAmount: 3
+        HealAmount: 5
         SkillTarget: 0

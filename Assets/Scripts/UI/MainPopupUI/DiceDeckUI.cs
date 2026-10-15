@@ -15,6 +15,7 @@ public class DiceDeckUI : MonoBehaviour
     [SerializeField] private Camera uiCamera;
     private List<DiceUI> diceUIList = new();
     private List<Game> games = new();
+    private Board board;
 
     private void DiceDrop(int diceIndex)
     {
@@ -36,7 +37,8 @@ public class DiceDeckUI : MonoBehaviour
         foreach (RectTransform area in actionArea)
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(area, Mouse.current.position.ReadValue(), uiCamera))
-                return EPlayerInputType.Action;
+                // 이번 턴에 이미 행동한 타일이면 취소 처리
+                return board.Games[board.CurrentGameIndex].CanTileAction ? EPlayerInputType.Action : EPlayerInputType.Cancel;
         }
         foreach (RectTransform area in cancelArea)
         {
@@ -46,10 +48,11 @@ public class DiceDeckUI : MonoBehaviour
         return EPlayerInputType.Move;
     }
 
-    public void Bind(List<Game> games)
+    public void Bind(Board board)
     {
         Clear();
-        this.games = games;
+        this.board = board;
+        games = board.Games;
         foreach (Game game in games)
         {
             game.DiceRolled += DiceUISetting;

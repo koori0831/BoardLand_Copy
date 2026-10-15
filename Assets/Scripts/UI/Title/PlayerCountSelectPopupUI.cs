@@ -15,7 +15,7 @@ public class PlayerCountSelectPopupUI : MonoBehaviour
 
     public void ClickPlayerCount(int playerCount)
     {
-        LocalGameSetting.PlayerCount = Mathf.Clamp(playerCount, LocalGameSetting.MinPlayerCount, LocalGameSetting.MaxPlayerCount);
+        LocalGameSetting.PlayerCount = Mathf.Clamp(playerCount, GameConstant.MinPlayerCount, GameConstant.MaxPlayerCount);
         SceneManager.LoadScene("Game");
     }
 }

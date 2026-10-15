@@ -13,8 +13,6 @@ public enum EPlayerInputType
 
 public class Board
 {
-    private static readonly int boardSize = 12;
-
     public List<Game> Games { get; private set; } = new();
     public Tiles Tiles { get; private set; }
     private int currentGameIndex = -1;
@@ -31,7 +29,7 @@ public class Board
 
     public Board(PlayerData playerData, EnemyData enemyData, Dictionary<EElementType, TileLevelData> tileLevelDatas, List<WeaponData> weaponDatas, int playerCount)
     {
-        Tiles = new Tiles(boardSize, tileLevelDatas);
+        Tiles = new Tiles(GameConstant.BoardSize, tileLevelDatas);
 
         for (int i = 0; i < playerCount; i++)
             Games.Add(new Game(playerData, enemyData, Tiles, weaponDatas, OnGameEnd));

@@ -10,7 +10,6 @@ public class Player : Unit
     private Weapon weapon = null;
     // 가지고 있는 아이템 목록 (겹치지 않고 한 칸에 하나씩)
     private List<Item> itemInventory = null;
-    private static readonly int itemInventorySize = 3;
     private int gold = 0;
 
     private UnitInputComponent inputComponenet;
@@ -18,7 +17,7 @@ public class Player : Unit
 
     public Weapon Weapon => weapon;
     public List<Item> ItemInventory => itemInventory;
-    public bool IsItemInventoryFull => itemInventory.Count >= itemInventorySize;
+    public bool IsItemInventoryFull => itemInventory.Count >= GameConstant.ItemInventorySize;
     public int Gold => gold;
     public event Action<Weapon> WeaponChanged;
     public event Action<List<Item>> ItemInventoryChanged;

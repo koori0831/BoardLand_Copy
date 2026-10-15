@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1383a829f9da0a4ba8976db852eebff, type: 3}
+  m_Name: FireTileLv4
+  m_EditorClassIdentifier: Assembly-CSharp::SkillSO
+  SkillName: Fire Lv4
+  SkillDescription: "\uC801\uC5D0\uAC8C 6 \uD53C\uD574"
+  SkillIcon: {fileID: 0}
+  SkillConditions: []
+  SkillEffects:
+  - rid: 7680903789261881466
+  references:
+    version: 2
+    RefIds:
+    - rid: 7680903789261881466
+      type: {class: DefaultAttackSkill, ns: , asm: Assembly-CSharp}
+      data:
+        Damage: 6
+        SkillTarget: 1

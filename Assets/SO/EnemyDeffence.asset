@@ -43,5 +43,5 @@ MonoBehaviour:
     - rid: 8685653994902651186
       type: {class: AddDeffendPointSkill, ns: , asm: Assembly-CSharp}
       data:
-        AddAmount: 2
+        AddAmount: 3
         SkillTarget: 0

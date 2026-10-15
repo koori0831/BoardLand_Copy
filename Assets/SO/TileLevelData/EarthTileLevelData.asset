@@ -16,8 +16,8 @@ MonoBehaviour:
   - RequiredEXP: 0
     Skill: {fileID: 0}
   - RequiredEXP: 8
-    Skill: {fileID: 0}
+    Skill: {fileID: 11400000, guid: ffc4edda999dc874cb22bd2c93c935b6, type: 2}
   - RequiredEXP: 16
-    Skill: {fileID: 0}
+    Skill: {fileID: 11400000, guid: 52d1547023102494cb7ca876383258fc, type: 2}
   - RequiredEXP: 24
-    Skill: {fileID: 0}
+    Skill: {fileID: 11400000, guid: 7a26e83811e688346b60fc93db5d36f2, type: 2}

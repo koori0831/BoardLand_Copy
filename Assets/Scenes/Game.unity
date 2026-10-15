@@ -7028,7 +7028,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -360, y: -200}
+  m_SizeDelta: {x: -360, y: -80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1668388274
 MonoBehaviour:
@@ -8272,6 +8272,8 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: c94a52f2d3ec96d4a98a893e9e7e5d78, type: 2}
   weaponDataSOs:
   - {fileID: 11400000, guid: 8b2e00195d0044a43856baa7f116a68a, type: 2}
+  - {fileID: 11400000, guid: 68919b18c984e744cbfba6e0f0abae7e, type: 2}
+  - {fileID: 11400000, guid: 91dba0dd628dcb744a2661e268944ad0, type: 2}
   itemDataSOs:
   - {fileID: 11400000, guid: 55b23dc65be307a46b45b050ac65e5a6, type: 2}
   - {fileID: 11400000, guid: aad234a2d4437a342a38eb2e8ec07d3b, type: 2}
@@ -8792,7 +8794,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -56}
-  m_SizeDelta: {x: -48, y: 130}
+  m_SizeDelta: {x: -48, y: 220}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1925884098
 MonoBehaviour:
