@@ -34,7 +34,7 @@ public class Board
         Tiles = new Tiles(GameConstant.BoardSize, tileLevelDatas);
 
         for (int i = 0; i < playerCount; i++)
-            Games.Add(new Game(playerData, enemyData, Tiles, weaponDatas, OnGameEnd));
+            Games.Add(new Game(playerData, enemyData, Tiles, weaponDatas));
     }
 
     public async UniTask StartGame()
@@ -53,8 +53,10 @@ public class Board
             {
                 LogManager.Log($"Player{currentGameIndex + 1}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
                 CurrentGameChanged?.Invoke(currentGameIndex);
-                await Games[currentGameIndex].TurnAsync();
+                Game.GameEndCheckData gameEndCheck = await Games[currentGameIndex].TurnAsync();
                 LogManager.Log($"Player{currentGameIndex + 1}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
+                if (gameEndCheck.IsGameEnd == true)
+                    OnGameEnd(gameEndCheck.IsPlayerWin);
             }
             if (isAllGameEnd == false)
                 currentGameIndex = (currentGameIndex + 1) % Games.Count;

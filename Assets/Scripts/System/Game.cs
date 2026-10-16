@@ -5,6 +5,17 @@ using System.Collections.Generic;
 
 public class Game
 {
+    public class GameEndCheckData
+    {
+        public bool IsGameEnd;
+        public bool IsPlayerWin;
+        public GameEndCheckData(bool isGameEnd, bool isPlayerWin)
+        {
+            IsGameEnd = isGameEnd;
+            IsPlayerWin = isPlayerWin;
+        }
+    }
+
     private Player playerUnit;
     private Enemy enemyUnit;
     private int playerPosition = 0;
@@ -27,15 +38,13 @@ public class Game
     public event Action<List<Dice>> DiceRolled;
 
     public bool IsGameEnd = false;
-    private Action<bool> gameEndCallback;
 
-    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, List<WeaponData> weaponDatas, Action<bool> gameEndCallback)
+    public Game(PlayerData playerData, EnemyData enemyData, Tiles tiles, List<WeaponData> weaponDatas)
     {
         playerUnit = new Player(playerData.Status);
         enemyUnit = new Enemy(enemyData.Status, enemyData.Skills);
         this.tiles = tiles;
         this.weaponDatas = weaponDatas;
-        this.gameEndCallback = gameEndCallback;
         playerInputActionDictionary = new Dictionary<EPlayerInputType, Action<Dice>>()
         {
             [EPlayerInputType.Move] = PlayerMove,
@@ -45,10 +54,11 @@ public class Game
         };
     }
 
-    public async UniTask TurnAsync()
+    public async UniTask<GameEndCheckData> TurnAsync()
     {
+        GameEndCheckData gameEndCheckData = GameEndCheck();
         if (IsGameEnd == true)
-            return;
+            return gameEndCheckData;
         turnCount++;
         TurnCountChanged?.Invoke(turnCount);
 
@@ -57,12 +67,14 @@ public class Game
         {
             PlayerInputResult inputResult = await playerUnit.InputReady();
             PlayerPhase(inputResult);
-            if (GameEndCheck() == true || inputResult.ActionType == EPlayerInputType.TurnEnd)
-                return;
+            gameEndCheckData = GameEndCheck();
+            if (IsGameEnd == true || inputResult.ActionType == EPlayerInputType.TurnEnd)
+                return gameEndCheckData;
 
             EnemyPhase();
-            if (GameEndCheck() == true)
-                return;
+            gameEndCheckData = GameEndCheck();
+            if (IsGameEnd == true)
+                return gameEndCheckData;
         }
     }
 
@@ -154,7 +166,7 @@ public class Game
         new SkillExecutor(enemyUnit.GetNextSkill(context), context).ExecuteSkill();
     }
 
-    private bool GameEndCheck()
+    private GameEndCheckData GameEndCheck()
     {
         if (playerUnit.Status.GetCurrentHealth() <= 0 || enemyUnit.Status.GetCurrentHealth() <= 0)
         {
@@ -162,9 +174,8 @@ public class Game
             // 게임이 끝난 플레이어는 더 이상 입력을 받지 않는다.
             playerUnit.Dispose();
             bool isPlayerWin = enemyUnit.Status.GetCurrentHealth() <= 0;
-            gameEndCallback?.Invoke(isPlayerWin);
-            return true;
+            return new GameEndCheckData(true, isPlayerWin);
         }
-        return false;
+        return new GameEndCheckData(false, false);
     }
 }
