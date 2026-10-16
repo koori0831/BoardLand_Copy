@@ -1,5 +1,6 @@
 ﻿using Alchemy.Inspector;
 using Core;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -73,7 +74,7 @@ public class LocalGameManagerMono : MonoBehaviour
             itemInventoryUI.Bind(board);
         if (shopPopupUI != null)
             shopPopupUI.Bind(board, CreateItemDataList(), weaponDatas);
-        board.StartGame();
+        board.StartGame().Forget();
         if (tileInfoUI != null)
             tileInfoUI.Bind(board);
     }

@@ -7,7 +7,6 @@ public class Game
 {
     private Player playerUnit;
     private Enemy enemyUnit;
-    private Action turnEndCallBack;
     private int playerPosition = 0;
     private int turnCount = 0;
     private int lapCount = 0;
@@ -46,42 +45,30 @@ public class Game
         };
     }
 
-    public void TurnStart(Action turnEndCallBack)
+    public async UniTask TurnAsync()
     {
         if (IsGameEnd == true)
-        {
-            EndTurn();
             return;
-        }
-        this.turnEndCallBack = turnEndCallBack;
         turnCount++;
         TurnCountChanged?.Invoke(turnCount);
 
         RollDice();
-        GameLoop().Forget();
-    }
-
-    private async UniTaskVoid GameLoop()
-    {
-        PlayerInputResult inputResult = await playerUnit.InputReady();
-        PlayerPhase(inputResult);
-        if (GameEndCheck() == true)
-            return;
-
-        if (inputResult.ActionType == EPlayerInputType.TurnEnd)
-            EndTurn();
-        else
+        while (true)
         {
+            PlayerInputResult inputResult = await playerUnit.InputReady();
+            PlayerPhase(inputResult);
+            if (GameEndCheck() == true || inputResult.ActionType == EPlayerInputType.TurnEnd)
+                return;
+
             EnemyPhase();
-            if (GameEndCheck() == false)
-                GameLoop().Forget();
+            if (GameEndCheck() == true)
+                return;
         }
     }
 
     public void Dispose()
     {
         playerUnit.Dispose();
-        turnEndCallBack = null;
         PlayerMoved = null;
         TurnCountChanged = null;
         LapCountChanged = null;
@@ -176,14 +163,8 @@ public class Game
             playerUnit.Dispose();
             bool isPlayerWin = enemyUnit.Status.GetCurrentHealth() <= 0;
             gameEndCallback?.Invoke(isPlayerWin);
-            EndTurn();
             return true;
         }
         return false;
-    }
-
-    private void EndTurn()
-    {
-        turnEndCallBack?.Invoke();
     }
 }

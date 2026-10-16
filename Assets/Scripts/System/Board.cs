@@ -1,6 +1,8 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 public enum EPlayerInputType
 {
@@ -35,7 +37,7 @@ public class Board
             Games.Add(new Game(playerData, enemyData, Tiles, weaponDatas, OnGameEnd));
     }
 
-    public void StartGame()
+    public async UniTask StartGame()
     {
         defeatGameList.Clear();
         winGameList.Clear();
@@ -44,7 +46,19 @@ public class Board
 
         // 우선 무조건 Player1(0) 부터 턴을 시작한다.
         currentGameIndex = 0;
-        StartCurrentTurn();
+        // 모든 게임이 끝날 때까지 끝나지 않은 게임의 턴을 순서대로 진행한다.
+        while (isAllGameEnd == false)
+        {
+            if (Games[currentGameIndex].IsGameEnd == false)
+            {
+                LogManager.Log($"Player{currentGameIndex + 1}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
+                CurrentGameChanged?.Invoke(currentGameIndex);
+                await Games[currentGameIndex].TurnAsync();
+                LogManager.Log($"Player{currentGameIndex + 1}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
+            }
+            if (isAllGameEnd == false)
+                currentGameIndex = (currentGameIndex + 1) % Games.Count;
+        }
     }
 
     private void OnGameEnd(bool isPlayerWin)
@@ -86,22 +100,5 @@ public class Board
             game.Dispose();
         CurrentGameChanged = null;
         AllGameEnd = null;
-    }
-
-    private void StartCurrentTurn()
-    {
-        LogManager.Log($"Player{currentGameIndex + 1}의 턴이 시작 됨.", ELogType.Test, ELogCategory.GameSystem);
-        CurrentGameChanged?.Invoke(currentGameIndex);
-        Games[currentGameIndex].TurnStart(TurnEndCallback);
-    }
-
-    private void TurnEndCallback()
-    {
-        LogManager.Log($"Player{currentGameIndex + 1}의 턴이 종료 됨.", ELogType.Test, ELogCategory.GameSystem);
-        // 모든 게임이 끝났다면 더 이상 턴을 진행하지 않는다.
-        if (isAllGameEnd)
-            return;
-        currentGameIndex = (currentGameIndex + 1) % Games.Count;
-        StartCurrentTurn();
     }
 }
